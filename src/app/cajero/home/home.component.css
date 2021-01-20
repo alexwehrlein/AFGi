@@ -1,0 +1,9 @@
+.home {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardTitulo {
+    font-size: 25px;
+    cursor: pointer;
+}

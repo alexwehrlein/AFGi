@@ -1,0 +1,19 @@
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="./assets/img/suit_up_in.gif" id="icon" width="90" alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="formularioLogin">
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario" formControlName="username">
+      <input type="password" id="password" class="fadeIn third" name="login" placeholder="contraseña" formControlName="password">
+      <input type="button" class="fadeIn fourth" value="Login" (click)="login()">
+    </form>
+
+  </div>
+</div>

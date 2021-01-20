@@ -1,0 +1,78 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" >
+                    <div class="card-header card-header-secondary">
+                        <h4 class="card-title ">Proveedores</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Nombre
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th>
+                                        Teléfono
+                                    </th>
+                                    <th>
+                                        Estado
+                                    </th>
+                                    <th>
+                                        Ciudad
+                                    </th>
+                                    <th>
+                                        Opciones
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="proveedores == null || proveedores.length  == 0">
+                                        <td colspan="7" align="center">
+                                            No hay proveedores registrados.
+                                        </td>
+                                    </tr>
+                                    <tr *ngFor="let proveedor of proveedores">
+                                        <td>
+                                            {{proveedor.idProveedor}}
+                                        </td>
+                                        <td>
+                                            {{proveedor.nombre}}
+                                        </td>
+                                        <td>
+                                            {{proveedor.email}}
+                                        </td>
+                                        <td>
+                                            {{proveedor.telefono}}
+                                        </td> 
+                                        <td>
+                                            {{proveedor.estado}}
+                                        </td> 
+                                        <td>
+                                            {{proveedor.ciudad}}
+                                        </td> 
+                                        <td>
+                                            <button  (click)="elejirProveedor(proveedor.idProveedor)" mat-raised-button type="button" matTooltip="Eliminar" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                            <button [routerLink]="['/proveedor/' , proveedor.idProveedor]" mat-raised-button type="button" matTooltip="Editar" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,75 @@
+<div class="logo">
+    <a href="#!" class="simple-text">
+        <div class="logo-img">
+            <img src="/assets/img/angular2-logo-red.png"/>
+        </div>
+        Farmacia Gi
+    </a>
+</div>
+<div class="sidebar-wrapper">
+  <div *ngIf="isMobileMenu()">
+    <ul class="nav navbar-nav nav-mobile-menu">
+        <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)">
+                <i class="material-icons">person</i>
+                <p>
+                    <span class="d-lg-none d-md-block">Perfil</span>
+                </p>
+            </a>
+        </li>
+    </ul>
+  </div>
+    <ul class="nav">
+        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
+            <a class="nav-link" [routerLink]="[menuItem.path]">
+                <i class="material-icons">{{menuItem.icon}}</i>
+                <p>{{menuItem.title}}</p>
+            </a>
+        </li>
+        <li routerLinkActive="active" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">person</i>
+                Empleados
+            </a>
+            <div class="dropdown-menu">
+              <a class="nav-link dropdown-item" [routerLink]="['/user-list']">Ver Empleados</a> 
+              <div class="nav-link dropdown-divider"></div>
+              <a class="nav-link dropdown-item" [routerLink]="['/user-profile']">Registro</a>
+            </div> 
+          </li>
+          <li routerLinkActive="active" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">local_shipping</i>
+                Proveedores
+            </a>
+            <div class="dropdown-menu">
+              <a class="nav-link dropdown-item" [routerLink]="['/proveedor-list']">Ver Proveedores</a>
+              <div class="nav-link dropdown-divider"></div>
+              <a class="nav-link dropdown-item" [routerLink]="['/proveedor']">Registro</a>
+            </div>
+          </li>
+          <li routerLinkActive="active" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">face</i>
+                clientes
+            </a>
+            <div class="dropdown-menu">
+              <a class="nav-link dropdown-item" [routerLink]="['/clientes-list']">Ver Clientes</a>
+              <div class="nav-link dropdown-divider"></div>
+              <a class="nav-link dropdown-item" [routerLink]="['/cliente']">Registro</a>
+            </div>
+          </li>
+          <li routerLinkActive="active" class="nav-item">
+            <a class="nav-link" [routerLink]="['/productos']">
+                <i class="material-icons">fact_check</i>
+                <p>Productos</p>
+            </a>
+        </li>
+          <li routerLinkActive="active" class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="salir()">
+                <i class="material-icons">exit_to_app</i>
+                <p>Salir</p>
+            </a>
+        </li>
+    </ul>
+</div>

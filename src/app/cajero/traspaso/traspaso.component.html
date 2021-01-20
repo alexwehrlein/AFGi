@@ -1,0 +1,163 @@
+<app-navbar-cajero></app-navbar-cajero>
+<div class="container-fluid" class="mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-secondary">
+                    <h4 class="card-title">Productos</h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Seleccione Sucursal</mat-label>
+                            <mat-select [(value)]="idSucursal" [disabled]="leccionSucursal">
+                                <mat-option
+                                    *ngFor="let sucursal of sucurdales"
+                                    [value]="sucursal.idSucursal"
+                                    >{{ sucursal.nombre }}</mat-option
+                                >
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12">
+                        <mat-form-field>
+                            <input
+                                matInput
+                                type="text"
+                                placeholder="Buscar"
+                                (keyup)="applyFilterProduc($event.target.value)"
+                            />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12">
+                        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                            <!--- Note that these columns can be defined in any order.
+                                  The actual rendered columns are set as a property on the row definition" -->
+
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="codigo">
+                                <th mat-header-cell *matHeaderCellDef>Codigo</th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{ element.codigo }}
+                                </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="nombre">
+                                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{ element.nombre ? element.nombre : element.marcaComercial }}
+                                </td>
+                            </ng-container>
+
+                            <!-- Weight Column -->
+                            <ng-container matColumnDef="descripcion">
+                                <th mat-header-cell *matHeaderCellDef>Descripción</th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{ element.descripcion }}
+                                </td>
+                            </ng-container>
+
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="agregar">
+                                <th mat-header-cell *matHeaderCellDef>Opciones</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button
+                                        (click)="openDialog(element)"
+                                        mat-raised-button
+                                        type="button"
+                                        matTooltip="Pedir"
+                                        [matTooltipPosition]="'above'"
+                                        class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                    >
+                                        <i class="material-icons">content_paste</i>
+                                    </button>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                        </table>
+                        <mat-paginator
+                            #paginatorProductos
+                            [pageSizeOptions]="[5, 10, 20]"
+                            showFirstLastButtons
+                        ></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-secondary">
+                    <h4 class="card-title">Productos Pedidos</h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <table mat-table [dataSource]="pedidoSucursal" class="mat-elevation-z8">
+                            <!--- Note that these columns can be defined in any order.
+                                  The actual rendered columns are set as a property on the row definition" -->
+
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="codigo">
+                                <th mat-header-cell *matHeaderCellDef>Codigo</th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{ element.codigo }}
+                                </td>
+                            </ng-container>
+
+                            <!-- Weight Column -->
+                            <ng-container matColumnDef="cantidad">
+                                <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{ element.cantidad }}
+                                </td>
+                            </ng-container>
+
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="opciones">
+                                <th mat-header-cell *matHeaderCellDef>opciones</th>
+                                <td mat-cell *matCellDef="let element; let i = index">
+                                    <button
+                                        (click)="openDialogEditar(element, i)"
+                                        mat-raised-button
+                                        type="button"
+                                        matTooltip="Editar"
+                                        [matTooltipPosition]="'above'"
+                                        class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                    >
+                                        <i class="material-icons">edit</i>
+                                    </button>
+                                    <button
+                                        (click)="eliminarPeticion(i)"
+                                        mat-raised-button
+                                        type="button"
+                                        matTooltip="Eliminar"
+                                        [matTooltipPosition]="'above'"
+                                        class="btn btn-danger btn-link btn-sm btn-just-icon"
+                                    >
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsPeticion"></tr>
+                            <tr
+                                mat-row
+                                *matRowDef="let row; columns: displayedColumnsPeticion"
+                            ></tr>
+                        </table>
+                    </div>
+                    <button
+                        mat-raised-button
+                        class="btn btn-success pull-right"
+                        (click)="agregar()"
+                    >
+                        Registrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-spinner></app-spinner>

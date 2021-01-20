@@ -1,0 +1,918 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-secondary">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">Productos:</span>
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a
+                                            mat-button
+                                            class="nav-link active"
+                                            href="#profile"
+                                            data-toggle="tab"
+                                        >
+                                            <i class="material-icons">add_circle_outline</i>
+                                            Nuevo
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a
+                                            mat-button
+                                            class="nav-link"
+                                            href="#edit"
+                                            data-toggle="tab"
+                                        >
+                                            <i class="material-icons">create</i>
+                                            Modificacion
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a
+                                            mat-button
+                                            class="nav-link"
+                                            href="#messages"
+                                            data-toggle="tab"
+                                        >
+                                            <i class="material-icons">storefront</i>
+                                            Comprar
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a
+                                            mat-button
+                                            class="nav-link"
+                                            href="#settings"
+                                            data-toggle="tab"
+                                        >
+                                            <i class="material-icons">autorenew</i>
+                                            Trasferir
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="profile">
+                                <form [formGroup]="formularioProductos">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Tipo producto</mat-label>
+                                                <mat-select
+                                                    name="tipo"
+                                                    formControlName="tipo"
+                                                    [(value)]="selected"
+                                                    (selectionChange)="onChange($event.value)"
+                                                >
+                                                    <mat-option value="medicamento"
+                                                        >Medicamento</mat-option
+                                                    >
+                                                    <mat-option value="abarrote"
+                                                        >Abarrote</mat-option
+                                                    >
+                                                    <mat-option value="cosmetico"
+                                                        >Cosmetico</mat-option
+                                                    >
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-form-field class="example-full-width">
+                                                <input
+                                                    matInput
+                                                    placeholder="Codigo"
+                                                    formControlName="codigo"
+                                                    type="text"
+                                                    name="codigo"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <mat-form-field class="example-full-width">
+                                                <input
+                                                    matInput
+                                                    placeholder="Descripcion"
+                                                    type="text"
+                                                    formControlName="descripcion"
+                                                    name="descripcion"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-6" *ngIf="abarrote || cosmetico">
+                                            <mat-form-field class="example-full-width">
+                                                <input
+                                                    matInput
+                                                    placeholder="Nombre"
+                                                    type="text"
+                                                    name="nombre"
+                                                    formControlName="nombre"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-6" *ngIf="medicamento">
+                                            <mat-form-field class="example-full-width">
+                                                <input
+                                                    matInput
+                                                    placeholder="Marca Comercial"
+                                                    type="text"
+                                                    name="marcaComercial"
+                                                    formControlName="marcaComercial"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-6" *ngIf="abarrote || cosmetico">
+                                            <mat-form-field class="example-full-width">
+                                                <input
+                                                    matInput
+                                                    placeholder="Marca"
+                                                    type="text"
+                                                    name="marca"
+                                                    formControlName="marca"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-6" *ngIf="medicamento || cosmetico">
+                                            <mat-form-field class="example-full-width">
+                                                <input
+                                                    matInput
+                                                    placeholder="Laboratorio"
+                                                    type="text"
+                                                    name="laboratorio"
+                                                    formControlName="laboratorio"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-6" *ngIf="medicamento">
+                                            <mat-form-field class="example-full-width">
+                                                <input
+                                                    matInput
+                                                    placeholder="Sustancia"
+                                                    type="text"
+                                                    name="sustancia"
+                                                    formControlName="sustancia"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-6" *ngIf="medicamento">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Tipo De Medicamento</mat-label>
+                                                <mat-select
+                                                    name="tipoMedicamento"
+                                                    formControlName="tipoMedicamento"
+                                                >
+                                                    <mat-option value="patente">Patente</mat-option>
+                                                    <mat-option value="generico"
+                                                        >Generico</mat-option
+                                                    >
+                                                    <mat-option value="material"
+                                                        >material de curación</mat-option
+                                                    >
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <button
+                                        mat-raised-button
+                                        class="btn btn-success pull-right"
+                                        [disabled]="!formularioProductos.valid"
+                                        (click)="agregar()"
+                                    >
+                                        Registrar
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="tab-pane" id="edit">
+                                <div class="row">
+                                    <h3 align="center">Medicamentos</h3>
+                                    <div class="col-md-12">
+                                        <mat-form-field>
+                                            <input
+                                                matInput
+                                                type="text"
+                                                placeholder="Buscar"
+                                                (keyup)="
+                                                    applyFilterMedicamento($event.target.value)
+                                                "
+                                            />
+                                        </mat-form-field>
+                                        <div class="col-md-12">
+                                            <table
+                                                mat-table
+                                                [dataSource]="dataSourceMedicamento"
+                                                class="mat-elevation-z8"
+                                            >
+                                                <ng-container matColumnDef="codigo">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Codigo
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.codigo }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="descripcion">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Descripción
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.descripcion }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="marcaComercial">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Marca Comercial
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.marcaComercial }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="sustancia">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Sustancia
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.sustancia }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="laboratorio">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Laboratorio
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.laboratorio }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="tipoMedicamento">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Tipo De Medicamento
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.tipoMedicamento }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="cantidad">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Cantidad
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.cantidad }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="precio">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Precio
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        $ {{ element.precio }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="editar">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Opciones
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        <button
+                                                            (click)="openDialogUpdate(element, 1)"
+                                                            mat-raised-button
+                                                            type="button"
+                                                            matTooltip="Editar"
+                                                            [matTooltipPosition]="'above'"
+                                                            class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                                        >
+                                                            <i class="material-icons">create</i>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr
+                                                    mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsMedicamento"
+                                                ></tr>
+                                                <tr
+                                                    mat-row
+                                                    *matRowDef="
+                                                        let row;
+                                                        columns: displayedColumnsMedicamento
+                                                    "
+                                                ></tr>
+                                            </table>
+                                            <mat-paginator
+                                                #matSourceMedicamento
+                                                [pageSizeOptions]="[5, 10, 20]"
+                                                showFirstLastButtons
+                                            ></mat-paginator>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h3 align="center">Abarrotes</h3>
+                                    <div class="col-md-12">
+                                        <mat-form-field>
+                                            <input
+                                                matInput
+                                                type="text"
+                                                placeholder="Buscar"
+                                                (keyup)="applyFilterAbarrotes($event.target.value)"
+                                            />
+                                        </mat-form-field>
+                                        <div class="col-md-12">
+                                            <table
+                                                mat-table
+                                                [dataSource]="dataSourceAbarrotes"
+                                                class="mat-elevation-z8"
+                                            >
+                                                <ng-container matColumnDef="codigo">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Codigo
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.codigo }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="descripcion">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Descripción
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.descripcion }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="nombre">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Nombre
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.nombre }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="marca">
+                                                    <th mat-header-cell *matHeaderCellDef>Marca</th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.marca }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="cantidad">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Cantidad
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.cantidad }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="precio">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Precio
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        $ {{ element.precio }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="editar">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Opciones
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        <button
+                                                            (click)="openDialogUpdate(element, 2)"
+                                                            mat-raised-button
+                                                            type="button"
+                                                            matTooltip="Editar"
+                                                            [matTooltipPosition]="'above'"
+                                                            class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                                        >
+                                                            <i class="material-icons">create</i>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr
+                                                    mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsAbarrotes"
+                                                ></tr>
+                                                <tr
+                                                    mat-row
+                                                    *matRowDef="
+                                                        let row;
+                                                        columns: displayedColumnsAbarrotes
+                                                    "
+                                                ></tr>
+                                            </table>
+                                            <mat-paginator
+                                                #matAbarrotes
+                                                [pageSizeOptions]="[5, 10, 20]"
+                                                showFirstLastButtons
+                                            ></mat-paginator>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h3 align="center">Cosmeticos</h3>
+                                    <div class="col-md-12">
+                                        <mat-form-field>
+                                            <input
+                                                matInput
+                                                type="text"
+                                                placeholder="Buscar"
+                                                (keyup)="applyFilterCosmeticos($event.target.value)"
+                                            />
+                                        </mat-form-field>
+                                        <div class="col-md-12">
+                                            <table
+                                                mat-table
+                                                [dataSource]="dataSourcePerfumeria"
+                                                class="mat-elevation-z8"
+                                            >
+                                                <ng-container matColumnDef="codigo">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Codigo
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.codigo }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="descripcion">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Descripción
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.descripcion }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="nombre">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Nombre
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.nombre }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="marca">
+                                                    <th mat-header-cell *matHeaderCellDef>Marca</th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.marca }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="laboratorio">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Laboratorio
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.laboratorio }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="cantidad">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Cantidad
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{ element.cantidad }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="precio">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Precio
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        $ {{ element.precio }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="editar">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Opciones
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        <button
+                                                            (click)="openDialogUpdate(element, 3)"
+                                                            mat-raised-button
+                                                            type="button"
+                                                            matTooltip="Editar"
+                                                            [matTooltipPosition]="'above'"
+                                                            class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                                        >
+                                                            <i class="material-icons">create</i>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr
+                                                    mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsCosmeticos"
+                                                ></tr>
+                                                <tr
+                                                    mat-row
+                                                    *matRowDef="
+                                                        let row;
+                                                        columns: displayedColumnsCosmeticos
+                                                    "
+                                                ></tr>
+                                            </table>
+                                            <mat-paginator
+                                                #matSourcePerfumeria
+                                                [pageSizeOptions]="[5, 10, 20]"
+                                                showFirstLastButtons
+                                            ></mat-paginator>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="messages">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <mat-form-field>
+                                            <input
+                                                matInput
+                                                type="text"
+                                                placeholder="Buscar"
+                                                (keyup)="applyFilter($event.target.value)"
+                                            />
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Seleccione Proveedor</mat-label>
+                                            <mat-select name="idSucursal" [(ngModel)]="idProveedor">
+                                                <mat-option
+                                                    *ngFor="let proveedor of proveedores"
+                                                    [value]="proveedor.idProveedor"
+                                                    >{{ proveedor.nombre }}</mat-option
+                                                >
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <table
+                                            mat-table
+                                            [dataSource]="dataSource"
+                                            class="mat-elevation-z8"
+                                        >
+                                            <!--- Note that these columns can be defined in any order.
+                                              The actual rendered columns are set as a property on the row definition" -->
+
+                                            <!-- Position Column -->
+                                            <ng-container matColumnDef="codigo">
+                                                <th mat-header-cell *matHeaderCellDef>Codigo</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.codigo }}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="nombre">
+                                                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{
+                                                        element.nombre
+                                                            ? element.nombre
+                                                            : element.marcaComercial
+                                                    }}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="descripcion">
+                                                <th mat-header-cell *matHeaderCellDef>
+                                                    Descripción
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.descripcion }}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Symbol Column -->
+                                            <ng-container matColumnDef="agregar">
+                                                <th mat-header-cell *matHeaderCellDef>Opciones</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <button
+                                                        (click)="openDialog(element)"
+                                                        mat-raised-button
+                                                        type="button"
+                                                        matTooltip="Agregar Compra"
+                                                        [matTooltipPosition]="'above'"
+                                                        class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                                    >
+                                                        <i class="material-icons">content_paste</i>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr
+                                                mat-header-row
+                                                *matHeaderRowDef="displayedColumns"
+                                            ></tr>
+                                            <tr
+                                                mat-row
+                                                *matRowDef="let row; columns: displayedColumns"
+                                            ></tr>
+                                        </table>
+                                        <mat-paginator
+                                            #matPaginator
+                                            [pageSizeOptions]="[5, 10, 20]"
+                                            showFirstLastButtons
+                                        ></mat-paginator>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table
+                                            mat-table
+                                            [dataSource]="dataSourceCompra"
+                                            class="mat-elevation-z8"
+                                        >
+                                            <!--- Note that these columns can be defined in any order.
+                                              The actual rendered columns are set as a property on the row definition" -->
+
+                                            <!-- Position Column -->
+                                            <ng-container matColumnDef="codigo">
+                                                <th mat-header-cell *matHeaderCellDef>Codigo</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.codigo }}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="precioVenta">
+                                                <th mat-header-cell *matHeaderCellDef>Precio</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.precioVenta }}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="cantidad">
+                                                <th mat-header-cell *matHeaderCellDef>cantidad</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.cantidad }}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Symbol Column -->
+                                            <ng-container matColumnDef="eliminar">
+                                                <th mat-header-cell *matHeaderCellDef>Opciones</th>
+                                                <td
+                                                    mat-cell
+                                                    *matCellDef="let element; let i = index"
+                                                >
+                                                    <button
+                                                        (click)="eliminarProducto(i)"
+                                                        mat-raised-button
+                                                        type="button"
+                                                        matTooltip="Eliminar"
+                                                        [matTooltipPosition]="'above'"
+                                                        class="btn btn-danger btn-link btn-sm btn-just-icon"
+                                                    >
+                                                        <i class="material-icons">delete_forever</i>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr
+                                                mat-header-row
+                                                *matHeaderRowDef="displayedColumns2"
+                                            ></tr>
+                                            <tr
+                                                mat-row
+                                                *matRowDef="let row; columns: displayedColumns2"
+                                            ></tr>
+                                        </table>
+                                        <mat-paginator
+                                            #paginatorCompra
+                                            [pageSizeOptions]="[5, 10, 20]"
+                                            showFirstLastButtons
+                                        ></mat-paginator>
+                                    </div>
+                                </div>
+                                <button
+                                    mat-raised-button
+                                    class="btn btn-success pull-right"
+                                    (click)="comprar()"
+                                >
+                                    Comprar
+                                </button>
+                            </div>
+                            <div class="tab-pane" id="settings">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <mat-form-field>
+                                            <input
+                                                matInput
+                                                type="text"
+                                                placeholder="Buscar"
+                                                (keyup)="applyFilter($event.target.value)"
+                                            />
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <table
+                                            mat-table
+                                            [dataSource]="dataSource"
+                                            class="mat-elevation-z8"
+                                        >
+                                            <!--- Note that these columns can be defined in any order.
+                                          The actual rendered columns are set as a property on the row definition" -->
+
+                                            <!-- Position Column -->
+                                            <ng-container matColumnDef="codigo">
+                                                <th mat-header-cell *matHeaderCellDef>Codigo</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.codigo }}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="nombre">
+                                                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{
+                                                        element.nombre
+                                                            ? element.nombre
+                                                            : element.marcaComercial
+                                                    }}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="descripcion">
+                                                <th mat-header-cell *matHeaderCellDef>
+                                                    Descripción
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.descripcion }}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Symbol Column -->
+                                            <ng-container matColumnDef="agregar">
+                                                <th mat-header-cell *matHeaderCellDef>Opciones</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <button
+                                                        mat-raised-button
+                                                        (click)="openDialogTrasferencia(element)"
+                                                        type="button"
+                                                        matTooltip="Agregar Compra"
+                                                        [matTooltipPosition]="'above'"
+                                                        class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                                    >
+                                                        <i class="material-icons">content_paste</i>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr
+                                                mat-header-row
+                                                *matHeaderRowDef="displayedColumns"
+                                            ></tr>
+                                            <tr
+                                                mat-row
+                                                *matRowDef="let row; columns: displayedColumns"
+                                            ></tr>
+                                        </table>
+                                        <mat-paginator
+                                            #matPaginator
+                                            [pageSizeOptions]="[5, 10, 20]"
+                                            showFirstLastButtons
+                                        ></mat-paginator>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <mat-form-field>
+                                            <input
+                                                matInput
+                                                type="text"
+                                                placeholder="Buscar"
+                                                (keyup)="applyFilterTraspaso($event.target.value)"
+                                            />
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <table
+                                            mat-table
+                                            [dataSource]="dataSourceTraspaso"
+                                            class="mat-elevation-z8"
+                                        >
+                                            <!--- Note that these columns can be defined in any order.
+                                    The actual rendered columns are set as a property on the row definition" -->
+
+                                            <!-- Position Column -->
+                                            <ng-container matColumnDef="codigo">
+                                                <th mat-header-cell *matHeaderCellDef>Codigo</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.codigo }}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="nombre">
+                                                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.nombre }}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="sucursales">
+                                                <th mat-header-cell *matHeaderCellDef>
+                                                    sucursales
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <p *ngFor="let item of element.cantidad">
+                                                        {{ item.nombre }}
+                                                        <strong>{{ item.cantidad }}</strong>
+                                                    </p>
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Symbol Column -->
+                                            <ng-container matColumnDef="opciones">
+                                                <th mat-header-cell *matHeaderCellDef>Opciones</th>
+                                                <td
+                                                    mat-cell
+                                                    *matCellDef="let element; let i = index"
+                                                >
+                                                    <button
+                                                        (click)="editarTraspaso(element, i)"
+                                                        mat-raised-button
+                                                        type="button"
+                                                        matTooltip="Editar"
+                                                        [matTooltipPosition]="'above'"
+                                                        class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                                    >
+                                                        <i class="material-icons">create</i>
+                                                    </button>
+                                                    <button
+                                                        (click)="
+                                                            eliminarTraspasoProducto(i, element)
+                                                        "
+                                                        mat-raised-button
+                                                        type="button"
+                                                        matTooltip="Eliminar"
+                                                        [matTooltipPosition]="'above'"
+                                                        class="btn btn-danger btn-link btn-sm btn-just-icon"
+                                                    >
+                                                        <i class="material-icons">delete_forever</i>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr
+                                                mat-header-row
+                                                *matHeaderRowDef="displayedColumnsTraspaso"
+                                            ></tr>
+                                            <tr
+                                                mat-row
+                                                *matRowDef="
+                                                    let row;
+                                                    columns: displayedColumnsTraspaso
+                                                "
+                                            ></tr>
+                                        </table>
+                                        <mat-paginator
+                                            #matSourceTraspaso
+                                            [pageSizeOptions]="[5, 10, 20]"
+                                            showFirstLastButtons
+                                        ></mat-paginator>
+                                    </div>
+                                </div>
+                                <button
+                                    mat-raised-button
+                                    class="btn btn-success pull-right"
+                                    (click)="guardarTraspaso()"
+                                >
+                                    Guardar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

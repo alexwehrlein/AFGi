@@ -1,0 +1,100 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-secondary">
+                        <h4 class="card-title">Registrar Proveedor</h4>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="formularioCrearProveedor">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input
+                                            matInput
+                                            placeholder="Nombre"
+                                            type="text"
+                                            name="nombre"
+                                            formControlName="nombre"
+                                        />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input
+                                            matInput
+                                            placeholder="Email"
+                                            type="email"
+                                            name="email"
+                                            formControlName="email"
+                                        />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input
+                                            matInput
+                                            placeholder="Telefono"
+                                            type="number"
+                                            maxlength="10"
+                                            oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            name="telefono"
+                                            formControlName="telefono"
+                                        />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Seleccionar Estado</mat-label>
+                                        <mat-select name="estado" formControlName="estado">
+                                            <mat-option
+                                                *ngFor="let estado of estados"
+                                                [value]="estado.value"
+                                                >{{ estado.viewValue }}</mat-option
+                                            >
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input
+                                            matInput
+                                            placeholder="Ciudad"
+                                            type="text"
+                                            name="ciudad"
+                                            formControlName="ciudad"
+                                        />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <button
+                                *ngIf="esNuevoProveedor"
+                                [disabled]="!formularioCrearProveedor.valid"
+                                mat-raised-button
+                                class="btn btn-success pull-right"
+                                (click)="agregar()"
+                            >
+                                Registrar
+                            </button>
+                            <button
+                                *ngIf="!esNuevoProveedor"
+                                [disabled]="!formularioCrearProveedor.valid"
+                                mat-raised-button
+                                class="btn btn-success pull-right"
+                                (click)="modificar()"
+                            >
+                                Modificar
+                            </button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="main-content">
+    <app-navbar-cajero></app-navbar-cajero>
+    <div class="container-fluid">
+        <div class="jumbotron home">
+            <h2 class="display-4">Bienvenido: {{ nombre }}</h2>
+            <h2 class="display-4">Sucursal: {{ sucursal }}</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">attach_money</i>
+                        </div>
+                        <p class="card-category">Registro de gastos</p>
+                        <h3 class="card-title">Gastos</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">autorenew</i>
+                        </div>
+                        <p class="card-category">Traspaso de Productos</p>
+                        <a class="card-title cardTitulo" [routerLink]="['/cajero/traspaso']"
+                            >Traspaso
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">face</i>
+                        </div>
+                        <p class="card-category">Gestion de Clientes</p>
+                        <a class="card-title cardTitulo" [routerLink]="['/cajero/clientes']"
+                            >Clientes
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

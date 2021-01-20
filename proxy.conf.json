@@ -1,0 +1,7 @@
+{
+    "/api" : {
+        "target" : "http://www.farmaciasgi-iguala-sistema.com.mx/GI/",
+        "secure" : false,
+        "logLevel" : "debug"
+    }
+}

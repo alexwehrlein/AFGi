@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Traspaso</h1>
+<div mat-dialog-content>
+    <p>Ingresar la cantidad a solicitar</p>
+    <mat-form-field appearance="outline">
+        <mat-label>Cantidad</mat-label>
+        <input matInput [(ngModel)]="data.cantidad" type="number" />
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="data">Cancelar</button>
+    <button mat-button *ngIf="data.index == null" (click)="onClick(data)" cdkFocusInitial>
+        Ok
+    </button>
+    <button mat-button *ngIf="data.index != null" (click)="editar(data)" cdkFocusInitial>Ok</button>
+</div>

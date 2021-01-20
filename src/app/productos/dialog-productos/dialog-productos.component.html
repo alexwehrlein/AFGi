@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Compra</h1>
+<div mat-dialog-content>
+  <p>Ingresar los datos requeridos</p>
+  <mat-form-field appearance="outline">
+    <mat-label>Precio Compra</mat-label>
+    <input matInput [(ngModel)]="data.precioCompra" type="number">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Precio Venta</mat-label>
+    <input matInput [(ngModel)]="data.precioVenta" type="number">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Cantidad</mat-label>
+    <input matInput [(ngModel)]="data.cantidad" type="number">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data">Cancelar</button>
+  <button mat-button (click)="onClick(data)" cdkFocusInitial>Ok</button>
+</div>

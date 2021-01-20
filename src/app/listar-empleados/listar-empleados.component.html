@@ -1,0 +1,67 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" *ngFor="let sucursal of usuariosSucursal">
+                    <div class="card-header card-header-secondary">
+                        <h4 class="card-title ">{{sucursal.nombre}}</h4>
+                        <p class="card-category">{{sucursal.direccion}}</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Nombre
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th>
+                                        Telefono
+                                    </th>
+                                    <th>
+                                        Opciones
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="sucursal == null || sucursal.usuarios.length == 0">
+                                        <td colspan="5" align="center">
+                                            No hay empleados registrados en esta sucursal.
+                                        </td>
+                                    </tr>
+                                    <tr *ngFor="let sucursalUsuarios of sucursal.usuarios">
+                                        <td>
+                                            {{sucursalUsuarios.idEmpleado}}
+                                        </td>
+                                        <td>
+                                            {{sucursalUsuarios.nombre}}
+                                        </td>
+                                        <td>
+                                            {{sucursalUsuarios.email}}
+                                        </td>
+                                        <td>
+                                            {{sucursalUsuarios.telefono}}
+                                        </td> 
+                                        <td>
+                                            <button  (click)="elejirEmpleado(sucursalUsuarios.idEmpleado)" mat-raised-button type="button" matTooltip="Eliminar" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                            <button [routerLink]="['/user-profile/' , sucursalUsuarios.idEmpleado]" mat-raised-button type="button" matTooltip="Editar" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  
