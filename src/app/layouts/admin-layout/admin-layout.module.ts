@@ -25,6 +25,7 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { DialogProductosComponent } from "../../productos/dialog-productos/dialog-productos.component";
 import { DialogProductosUpdateComponent } from "../../productos/dialog-productos-update/dialog-productos-update.component";
 import { DialogProductosTrasferenciaComponent } from "../../productos/dialog-productos-trasferencia/dialog-productos-trasferencia.component";
+import { ModalPrecioProductoComponent } from "../../productos/modal-precio-producto/modal-precio-producto.component";
 import { ModelPendientesComponent } from "../../cajero/model-pendientes/model-pendientes.component";
 import { NgxSpinnerModule } from "ngx-spinner";
 
@@ -59,8 +60,10 @@ import { NgxSpinnerModule } from "ngx-spinner";
         DialogProductosComponent,
         DialogProductosUpdateComponent,
         DialogProductosTrasferenciaComponent,
+        ModalPrecioProductoComponent
     ],
     entryComponents: [
+        ModalPrecioProductoComponent,
         DialogProductosComponent,
         DialogProductosUpdateComponent,
         DialogProductosTrasferenciaComponent,

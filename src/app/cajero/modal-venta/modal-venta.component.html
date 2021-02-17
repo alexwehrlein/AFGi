@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Venta.</h2>
+<div mat-dialog-content>
+    <h2 class="total">Total: {{ data.total | currency }}</h2>
+    <mat-form-field appearance="outline">
+        <mat-label>Imorte</mat-label>
+        <input class="importe" matInput [(ngModel)]="importe" type="text" pattern="[0-9]+" (input)="cambioDevolver($event)" (keyup.enter)="venta()"/>
+    </mat-form-field>
+    <h2 class="total">Cambio: {{ cambio | currency }}</h2>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</div>

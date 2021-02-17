@@ -3,18 +3,18 @@
   <p>Ingresar los datos requeridos</p>
   <mat-form-field appearance="outline">
     <mat-label>Precio Compra</mat-label>
-    <input matInput [(ngModel)]="data.precioCompra" type="number">
+    <input matInput [(ngModel)]="data.precioCompra" type="number" (input)="validarNumero($event)">
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Precio Venta</mat-label>
-    <input matInput [(ngModel)]="data.precioVenta" type="number">
+    <input matInput [(ngModel)]="data.precioVenta" type="number" (input)="validarNumero($event)">
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Cantidad</mat-label>
-    <input matInput [(ngModel)]="data.cantidad" type="number">
+    <input matInput [(ngModel)]="data.cantidad" type="number" (input)="validarNumero($event)">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="data">Cancelar</button>
-  <button mat-button (click)="onClick(data)" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onClick(data)" cdkFocusInitial class="btn btn-success">Ok</button>
 </div>

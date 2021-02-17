@@ -91,17 +91,17 @@ export class RegistroClientesComponent implements OnInit {
         this.cliente = this.formularioCrearCliente.value as Cliente;
         this.clienteInyectable.registarCliente(this.cliente, this.token).subscribe(
             (res) => {
-                this.formularioCrearCliente.reset();
+                //this.formularioCrearCliente.reset();
                 notify("El cliente fue registrado exitosamente", "success");
                 this.spinner.hide();
                 if (this.cajero) {
                     setTimeout(() => {
                         this.router.navigate(["/cajero/clientes"]);
-                    }, 1500);
+                    }, 1000);
                 } else {
                     setTimeout(() => {
                         this.router.navigate(["clientes-list"]);
-                    }, 1500);
+                    }, 1000);
                 }
             },
             (res) => {
@@ -156,18 +156,18 @@ export class RegistroClientesComponent implements OnInit {
     modificarDescuentos(datosDescuentos) {
         this.clienteInyectable.editarDescuentos(datosDescuentos, this.token).subscribe(
             (res) => {
-                this.formularioCrearCliente.reset();
+                //this.formularioCrearCliente.reset();
                 notify("El cliente fue actualizado exitosamente", "success");
                 this.esNuevoCliente = true;
                 this.spinner.hide();
                 if (this.cajero) {
                     setTimeout(() => {
                         this.router.navigate(["/cajero/clientes"]);
-                    }, 1500);
+                    }, 1000);
                 } else {
                     setTimeout(() => {
                         this.router.navigate(["clientes-list"]);
-                    }, 1500);
+                    }, 1000);
                 }
             },
             (res) => {
@@ -182,5 +182,29 @@ export class RegistroClientesComponent implements OnInit {
                 }
             }
         );
+    }
+
+    validarnombre(event){
+        var out = '';
+        var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZàèìòùÜ ';
+        
+        for (var i=0; i<event.target.value.length; i++)
+           if (filtro.indexOf(event.target.value.charAt(i)) != -1) 
+                 
+              out += event.target.value.charAt(i);
+        
+          event.target.value = out;
+    }
+
+    validarNumero(event){
+        var out = '';
+        var filtro = '1234567890';
+        
+        for (var i=0; i<event.target.value.length; i++)
+           if (filtro.indexOf(event.target.value.charAt(i)) != -1) 
+                 
+              out += event.target.value.charAt(i);
+        
+          event.target.value = out;
     }
 }

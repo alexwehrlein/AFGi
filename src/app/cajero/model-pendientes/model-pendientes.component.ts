@@ -90,12 +90,12 @@ export class ModelPendientesComponent implements OnInit {
 
     ngOnInit(): void {
         this.token = localStorage.getItem("token");
-        let dataPedidoAlmacen:any = localStorage.getItem('dataPedido');
-        dataPedidoAlmacen = JSON.parse(dataPedidoAlmacen);
+        //let dataPedidoAlmacen:any = localStorage.getItem('dataPedido');
+        //dataPedidoAlmacen = JSON.parse(dataPedidoAlmacen);
         setTimeout(() => {
-            this.dataSourceMedicamento = new MatTableDataSource(dataPedidoAlmacen.productosMedicamento);
-            this.dataSourceAbarrotes = new MatTableDataSource(dataPedidoAlmacen.productosAbarrote);
-            this.dataSourceCosmeticos = new MatTableDataSource(dataPedidoAlmacen.productosCosmetico);
+            this.dataSourceMedicamento = new MatTableDataSource(this.data.productosMedicamento);
+            this.dataSourceAbarrotes = new MatTableDataSource(this.data.productosAbarrote);
+            this.dataSourceCosmeticos = new MatTableDataSource(this.data.productosCosmetico);
             this.dataSourceMedicamento.paginator = this.paginatorMedicamento
             this.dataSourceAbarrotes.paginator = this.paginatorAbarrotes
             this.dataSourceCosmeticos.paginator = this.paginatorCosmeticos
@@ -113,6 +113,7 @@ export class ModelPendientesComponent implements OnInit {
     }
 
     onClick(data: any) {
+        this.spinner.show();
         let productosPP: any[] = [];
 
         data.productosMedicamento.map((item, index) => {
@@ -162,10 +163,12 @@ export class ModelPendientesComponent implements OnInit {
 
         this.sucursalService.actualizarInventario(datos, this.token).subscribe(
             (res) => {
+                this.spinner.hide();
                 notify("El pedido fue aceptado", "success");
                 this.dialogRef.close();
             },
             (res) => {
+                this.spinner.hide();
                 if (res.codigo == 5) {
                     notify(res.mensaje, "danger");
                 }

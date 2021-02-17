@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Ingrese el gasto.</h2>
+<div mat-dialog-content>
+    <mat-form-field appearance="outline">
+        <mat-label>Descripción
+            </mat-label>
+        <input matInput [(ngModel)]="descripccion" type="text" (input)="validarnombre($event)"/>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Responsable
+            </mat-label>
+        <input matInput [(ngModel)]="responsable" type="text" (input)="validarnombre($event)"/>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Cantidad</mat-label>
+        <input matInput [(ngModel)]="cantidad" type="text" (input)="validarNumero($event)"/>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+    <button mat-button (click)="guardar()" cdkFocusInitial class="btn btn-success">Guardar</button>
+</div>
+
+<app-spinner></app-spinner>

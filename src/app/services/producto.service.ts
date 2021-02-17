@@ -59,6 +59,17 @@ export class ProductoService {
         );
     }
 
+    octenrtProductosSucursal(token, url, idSucursal): Observable<Producto[]> {
+        var headers = {
+            headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
+        };
+        return this.http.get<Producto[]>(environment.URL + "producto/porSucursal/" + url+"/"+idSucursal, headers).pipe(
+            catchError((err) => {
+                return throwError(err.error);
+            })
+        );
+    }
+
     compraProductos(productos, token): Observable<any> {
         var headers = {
             headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
@@ -69,4 +80,17 @@ export class ProductoService {
             })
         );
     }
+
+    actualizarPrecioProducto(producto, token): Observable<any> {
+        var headers = {
+            headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
+        };
+        return this.http.put<any>(environment.URL + `producto/actualizaPrecio/${producto.codigo}/${producto.precioVenta}`, producto , headers).pipe(
+            catchError((err) => {
+                return throwError(err.error);
+            })
+        );
+    }
+
+
 }

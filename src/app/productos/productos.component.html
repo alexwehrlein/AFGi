@@ -94,6 +94,7 @@
                                                     formControlName="codigo"
                                                     type="text"
                                                     name="codigo"
+                                                    (input)="validarNumero($event)"
                                                 />
                                             </mat-form-field>
                                         </div>
@@ -105,6 +106,7 @@
                                                     type="text"
                                                     formControlName="descripcion"
                                                     name="descripcion"
+                                                    (input)="validarnombre($event)"
                                                 />
                                             </mat-form-field>
                                         </div>
@@ -116,6 +118,7 @@
                                                     type="text"
                                                     name="nombre"
                                                     formControlName="nombre"
+                                                    (input)="validarnombre($event)" 
                                                 />
                                             </mat-form-field>
                                         </div>
@@ -127,6 +130,7 @@
                                                     type="text"
                                                     name="marcaComercial"
                                                     formControlName="marcaComercial"
+                                                    (input)="validarnombre($event)"
                                                 />
                                             </mat-form-field>
                                         </div>
@@ -138,6 +142,7 @@
                                                     type="text"
                                                     name="marca"
                                                     formControlName="marca"
+                                                    (input)="validarnombre($event)"
                                                 />
                                             </mat-form-field>
                                         </div>
@@ -149,6 +154,7 @@
                                                     type="text"
                                                     name="laboratorio"
                                                     formControlName="laboratorio"
+                                                    (input)="validarnombre($event)"
                                                 />
                                             </mat-form-field>
                                         </div>
@@ -160,6 +166,7 @@
                                                     type="text"
                                                     name="sustancia"
                                                     formControlName="sustancia"
+                                                    (input)="validarnombre($event)"
                                                 />
                                             </mat-form-field>
                                         </div>
@@ -175,7 +182,7 @@
                                                         >Generico</mat-option
                                                     >
                                                     <mat-option value="material"
-                                                        >material de curación</mat-option
+                                                        >Material de Curación</mat-option
                                                     >
                                                 </mat-select>
                                             </mat-form-field>
@@ -226,15 +233,6 @@
                                                     </th>
                                                     <td mat-cell *matCellDef="let element">
                                                         {{ element.descripcion }}
-                                                    </td>
-                                                </ng-container>
-
-                                                <ng-container matColumnDef="marcaComercial">
-                                                    <th mat-header-cell *matHeaderCellDef>
-                                                        Marca Comercial
-                                                    </th>
-                                                    <td mat-cell *matCellDef="let element">
-                                                        {{ element.marcaComercial }}
                                                     </td>
                                                 </ng-container>
 
@@ -289,6 +287,17 @@
                                                     </th>
                                                     <td mat-cell *matCellDef="let element">
                                                         <button
+                                                            *ngIf="element.precio > 0"
+                                                            (click)="openDialogCambiarPrecio(element)"
+                                                            mat-raised-button
+                                                            type="button"
+                                                            matTooltip="Editar Precio"
+                                                            [matTooltipPosition]="'above'"
+                                                            class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                                        >
+                                                            <i class="material-icons colorFarmacia">attach_money</i>
+                                                        </button>
+                                                        <button
                                                             (click)="openDialogUpdate(element, 1)"
                                                             mat-raised-button
                                                             type="button"
@@ -296,7 +305,7 @@
                                                             [matTooltipPosition]="'above'"
                                                             class="btn btn-primary btn-link btn-sm btn-just-icon"
                                                         >
-                                                            <i class="material-icons">create</i>
+                                                            <i class="material-icons colorFarmacia">create</i>
                                                         </button>
                                                     </td>
                                                 </ng-container>
@@ -396,6 +405,16 @@
                                                     </th>
                                                     <td mat-cell *matCellDef="let element">
                                                         <button
+                                                        (click)="openDialogCambiarPrecio(element)"
+                                                        mat-raised-button
+                                                        type="button"
+                                                        matTooltip="Editar Precio"
+                                                        [matTooltipPosition]="'above'"
+                                                        class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                                    >
+                                                        <i class="material-icons colorFarmacia">attach_money</i>
+                                                    </button>
+                                                        <button
                                                             (click)="openDialogUpdate(element, 2)"
                                                             mat-raised-button
                                                             type="button"
@@ -403,7 +422,7 @@
                                                             [matTooltipPosition]="'above'"
                                                             class="btn btn-primary btn-link btn-sm btn-just-icon"
                                                         >
-                                                            <i class="material-icons">create</i>
+                                                            <i class="material-icons colorFarmacia">create</i>
                                                         </button>
                                                     </td>
                                                 </ng-container>
@@ -512,6 +531,16 @@
                                                     </th>
                                                     <td mat-cell *matCellDef="let element">
                                                         <button
+                                                        (click)="openDialogCambiarPrecio(element)"
+                                                        mat-raised-button
+                                                        type="button"
+                                                        matTooltip="Editar Precio"
+                                                        [matTooltipPosition]="'above'"
+                                                        class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                                    >
+                                                        <i class="material-icons colorFarmacia">attach_money</i>
+                                                    </button>
+                                                        <button
                                                             (click)="openDialogUpdate(element, 3)"
                                                             mat-raised-button
                                                             type="button"
@@ -519,7 +548,7 @@
                                                             [matTooltipPosition]="'above'"
                                                             class="btn btn-primary btn-link btn-sm btn-just-icon"
                                                         >
-                                                            <i class="material-icons">create</i>
+                                                            <i class="material-icons colorFarmacia">create</i>
                                                         </button>
                                                     </td>
                                                 </ng-container>
@@ -622,7 +651,7 @@
                                                         [matTooltipPosition]="'above'"
                                                         class="btn btn-primary btn-link btn-sm btn-just-icon"
                                                     >
-                                                        <i class="material-icons">content_paste</i>
+                                                        <i class="material-icons colorFarmacia">content_paste</i>
                                                     </button>
                                                 </td>
                                             </ng-container>
@@ -690,7 +719,7 @@
                                                         [matTooltipPosition]="'above'"
                                                         class="btn btn-danger btn-link btn-sm btn-just-icon"
                                                     >
-                                                        <i class="material-icons">delete_forever</i>
+                                                        <i class="material-icons colorFarmacia">delete_forever</i>
                                                     </button>
                                                 </td>
                                             </ng-container>
@@ -782,7 +811,7 @@
                                                         [matTooltipPosition]="'above'"
                                                         class="btn btn-primary btn-link btn-sm btn-just-icon"
                                                     >
-                                                        <i class="material-icons">content_paste</i>
+                                                        <i class="material-icons colorFarmacia">content_paste</i>
                                                     </button>
                                                 </td>
                                             </ng-container>
@@ -877,7 +906,7 @@
                                                         [matTooltipPosition]="'above'"
                                                         class="btn btn-danger btn-link btn-sm btn-just-icon"
                                                     >
-                                                        <i class="material-icons">delete_forever</i>
+                                                        <i class="material-icons colorFarmacia">delete_forever</i>
                                                     </button>
                                                 </td>
                                             </ng-container>

@@ -132,4 +132,28 @@ export class DialogProductosUpdateComponent implements OnInit {
                );
           this.dialogRef.close();
      }
+
+     validarnombre(event){
+          var out = '';
+          var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZàèìòùÜ ';
+          
+          for (var i=0; i<event.target.value.length; i++)
+             if (filtro.indexOf(event.target.value.charAt(i)) != -1) 
+                   
+                out += event.target.value.charAt(i);
+          
+            event.target.value = out;
+      }
+  
+      validarNumero(event){
+          var out = '';
+          var filtro = '1234567890';
+          
+          for (var i=0; i<event.target.value.length; i++)
+             if (filtro.indexOf(event.target.value.charAt(i)) != -1) 
+                   
+                out += event.target.value.charAt(i);
+          
+            event.target.value = out;
+      }
 }

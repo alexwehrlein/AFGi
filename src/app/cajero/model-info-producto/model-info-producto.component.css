@@ -1,0 +1,79 @@
+.card-header {
+    background: #00bcd4;
+}
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+.mat-accent .mat-pseudo-checkbox-checked,
+.mat-accent .mat-pseudo-checkbox-indeterminate,
+.mat-pseudo-checkbox-checked,
+.mat-pseudo-checkbox-indeterminate {
+    background-color: #00bcd4 !important; /* Red background for example */
+}
+
+/* underline border color on focused */
+::ng-deep .mat-focused .mat-form-field-underline .mat-form-field-ripple {
+    background-color: #00bcd4 !important;
+}
+
+table {
+    width: 100%;
+}
+
+.card{
+    height: 84vh;
+}
+
+.tableTitle{
+    width: 20%;
+}
+
+.ventas{
+    height: 75%;
+    overflow: scroll;
+}
+
+.accionesVenta{
+    background-color: #00205B;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    width: 13%;
+    height: 70px;
+    margin-left: 10px;
+}
+
+.laberTotalVenta{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.totalVenta{
+    font-size: 42px;
+    color: green;
+    font-weight: 600;
+}
+
+table thead{
+    background: #00205B;
+    color: white;
+}
+
+table tbody tr {
+    max-height: 50px;
+}
+
+.desProducto{
+    font-size: 12px;
+}
+
+.tituloProducto{
+    font-size: 14px;
+}
+
+.ventaPausada{
+    background: #8CD5D1;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+}

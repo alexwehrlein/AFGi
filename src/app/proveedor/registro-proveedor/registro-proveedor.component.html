@@ -17,6 +17,7 @@
                                             type="text"
                                             name="nombre"
                                             formControlName="nombre"
+                                            (input)="validarnombre($event)"
                                         />
                                     </mat-form-field>
                                 </div>
@@ -43,6 +44,7 @@
                                             oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                             name="telefono"
                                             formControlName="telefono"
+                                            (input)="validarNumero($event)"
                                         />
                                     </mat-form-field>
                                 </div>
@@ -68,6 +70,7 @@
                                             type="text"
                                             name="ciudad"
                                             formControlName="ciudad"
+                                            (input)="validarnombre($event)"
                                         />
                                     </mat-form-field>
                                 </div>

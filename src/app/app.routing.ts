@@ -8,6 +8,7 @@ import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.compon
 import { HomeComponent } from "./cajero/home/home.component";
 import { TraspasoComponent } from "./cajero/traspaso/traspaso.component";
 import { ClientesCajerosComponent } from "./cajero/clientes-cajeros/clientes-cajeros.component";
+import { VentasComponent } from "./cajero/ventas/ventas.component";
 import { VerClientesCajerosComponent } from "./cajero/ver-clientes-cajeros/ver-clientes-cajeros.component";
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: "cajero/clientes", component: ClientesCajerosComponent },
     { path: "cajero/registro-cliente", component: VerClientesCajerosComponent },
     { path: "cajero/registro-cliente/:clienteId", component: VerClientesCajerosComponent },
+    { path: "cajero/ventas", component: VentasComponent },
     { path: "cajero/", component: HomeComponent },
     {
         path: "",

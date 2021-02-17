@@ -184,11 +184,11 @@ export class UserProfileComponent implements OnInit {
         console.log(this.usuario);
         this.sucursalInyectable.guardarUsuario(this.usuario, this.token).subscribe(
             (usuario) => {
-                this.formularioCrearEmpleado.reset();
+                //this.formularioCrearEmpleado.reset();
                 notify("El empleado fue registro exitosamente", "success");
                 setTimeout(() => {
                     this.router.navigate(["user-list"]);
-                }, 3000);
+                }, 1000);
             },
             (res) => {
                 if (res.codigo == 3) {
@@ -214,7 +214,7 @@ export class UserProfileComponent implements OnInit {
                 notify("El empleado fue actualizado exitosamente", "success");
                 setTimeout(() => {
                     this.router.navigate(["user-list"]);
-                }, 3000);
+                }, 1000);
             },
             (res) => {
                 if (res.codigo == 5) {
@@ -228,5 +228,29 @@ export class UserProfileComponent implements OnInit {
                 }
             }
         );
+    }
+
+    validarnombre(event){
+        var out = '';
+        var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZàèìòùÜ ';
+        
+        for (var i=0; i<event.target.value.length; i++)
+           if (filtro.indexOf(event.target.value.charAt(i)) != -1) 
+                 
+              out += event.target.value.charAt(i);
+        
+          event.target.value = out;
+    }
+
+    validarNumero(event){
+        var out = '';
+        var filtro = '1234567890';
+        
+        for (var i=0; i<event.target.value.length; i++)
+           if (filtro.indexOf(event.target.value.charAt(i)) != -1) 
+                 
+              out += event.target.value.charAt(i);
+        
+          event.target.value = out;
     }
 }

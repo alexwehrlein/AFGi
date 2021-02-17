@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Cambio de Precio</h1>
+<div mat-dialog-content>
+  <p>Ingresar los datos requeridos</p>
+  <mat-form-field appearance="outline">
+    <mat-label>Precio Compra</mat-label>
+    <input matInput [(ngModel)]="data.precioVenta" type="number" (input)="validarNumero($event)">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data">Cancelar</button>
+  <button mat-button (click)="onClick(data)" cdkFocusInitial class="btn btn-success">Ok</button>
+</div>

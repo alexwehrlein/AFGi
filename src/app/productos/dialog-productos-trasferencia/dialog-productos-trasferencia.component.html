@@ -2,7 +2,7 @@
 <div mat-dialog-content>
     <mat-form-field appearance="outline" *ngFor="let sucursal of sucurdales; let i = index">
         <mat-label>{{ sucursal.nombre }}</mat-label>
-        <input matInput [(ngModel)]="data.cantidad[i]" type="number" [value]="0" />
+        <input matInput [(ngModel)]="data.cantidad[i]" type="number" [value]="0" (input)="validarNumero($event)" />
     </mat-form-field>
 </div>
 <div mat-dialog-actions>
@@ -13,6 +13,7 @@
         color="primary"
         (click)="onClick(data)"
         cdkFocusInitial
+        class="btn btn-success"
     >
         Ok
     </button>
@@ -22,6 +23,7 @@
         color="primary"
         (click)="onClickEditar(data)"
         cdkFocusInitial
+        class="btn btn-success"
     >
         Editat
     </button>

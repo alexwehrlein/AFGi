@@ -1,5 +1,6 @@
 table {
     width: 100%;
+    table-layout: fixed;
 }
 
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,

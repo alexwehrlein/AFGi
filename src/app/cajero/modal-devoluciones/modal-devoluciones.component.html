@@ -1,0 +1,197 @@
+<h3 mat-dialog-title>Productos</h3>
+<div mat-dialog-content>
+    <div class="col-12">
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            placeholder="Ingrese el folio de la venta."
+            (keyup.enter)="buscarVenta($event.target)"
+            (input)="validarNumero($event)"
+            id="searchProductoFolio"
+          />
+        </mat-form-field>
+      </div>
+    <div *ngIf="!caduco">
+        <h4>Selecciónar los productos que desea devolver</h4>
+        <div *ngIf="venta.band[0] && !caduco  ">
+            <p>Medicamento</p>
+            <table mat-table [dataSource]="dataSourceMedicamento" class="mat-elevation-z8">
+                <ng-container matColumnDef="codigo">
+                    <th mat-header-cell *matHeaderCellDef>Codigo</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.codigo }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="marcaComercial">
+                    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.marcaComercial }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="descripcion">
+                    <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.descripcion }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="sustancia">
+                    <th mat-header-cell *matHeaderCellDef>sustancia</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.sustancia }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="cantidad">
+                    <th mat-header-cell *matHeaderCellDef>cantidad</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.cantidad }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="opciones">
+                    <th mat-header-cell *matHeaderCellDef>Opciones</th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                        <mat-checkbox
+                            class="example-margin"
+                            (change)="onChange($event)"
+                            [value]="element.codigo"
+                        ></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="productosMedicamento"></tr>
+                <tr mat-row *matRowDef="let row; columns: productosMedicamento"></tr>
+            </table>
+            <mat-paginator
+                #matPaginatorMedicamento
+                [pageSizeOptions]="[5, 10, 20]"
+                showFirstLastButtons
+            ></mat-paginator>
+        </div>
+        <div *ngIf="venta.band[1] && !caduco">
+            <p>Abarrotes</p>
+            <table mat-table [dataSource]="dataSourceAbarrotes" class="mat-elevation-z8">
+                <ng-container matColumnDef="codigo">
+                    <th mat-header-cell *matHeaderCellDef>Codigo</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.codigo }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.marcaComercial }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="descripcion">
+                    <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.descripcion }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="marca">
+                    <th mat-header-cell *matHeaderCellDef>Marca</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.marca }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cantidad">
+                    <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.cantidad }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="opciones">
+                    <th mat-header-cell *matHeaderCellDef>Opciones</th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                        <mat-checkbox
+                            class="example-margin"
+                            (change)="onChange($event)"
+                            [value]="element.codigo"
+                        ></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="productosAbarrote"></tr>
+                <tr mat-row *matRowDef="let row; columns: productosAbarrote"></tr>
+            </table>
+            <mat-paginator
+                #matPaginatorAbarrotes
+                [pageSizeOptions]="[5, 10, 20]"
+                showFirstLastButtons
+            ></mat-paginator>
+        </div>
+        <div *ngIf="venta.band[2] && !caduco">
+            <p>Cosmeticos</p>
+            <table mat-table [dataSource]="dataSourceCosmeticos" class="mat-elevation-z8">
+                <ng-container matColumnDef="codigo">
+                    <th mat-header-cell *matHeaderCellDef>Codigo</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.codigo }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.marcaComercial }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="descripcion">
+                    <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.descripcion }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="marca">
+                    <th mat-header-cell *matHeaderCellDef>Marca</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.marca }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cantidad">
+                    <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.cantidad }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="opciones">
+                    <th mat-header-cell *matHeaderCellDef>Opciones</th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                        <mat-checkbox
+                            class="example-margin"
+                            (change)="onChange($event)"
+                            [value]="element.codigo"
+                        ></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="productosCosmetico"></tr>
+                <tr mat-row *matRowDef="let row; columns: productosCosmetico"></tr>
+            </table>
+            <mat-paginator
+                #matPaginatorCosmeticos
+                [pageSizeOptions]="[5, 10, 20]"
+                showFirstLastButtons
+            ></mat-paginator>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="null">Cancelar</button>
+    <button
+        mat-button
+        (click)="onClick()"
+        cdkFocusInitial
+        class="btn btn-success"
+    >
+        Continuar
+    </button>
+</div>
+
+<app-spinner></app-spinner>

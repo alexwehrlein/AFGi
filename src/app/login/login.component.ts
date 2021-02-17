@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        localStorage.removeItem("token");
+        localStorage.clear();
         this.formularioLogin = this.formBuilder.group({
             username: ["", Validators.required],
             password: ["", Validators.required],
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
         this.usuario = this.formularioLogin.value as Login;
         this.loginInyectable.login(this.usuario).subscribe(
             (res) => {
-                console.log(res);
+                //console.log(res);
                 localStorage.setItem("token", res.token);
                 localStorage.setItem("rol", res.user.authorities[0].authority);
                 localStorage.setItem("username", res.user.username);

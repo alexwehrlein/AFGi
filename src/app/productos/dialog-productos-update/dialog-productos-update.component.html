@@ -1,39 +1,40 @@
-<h1 mat-dialog-title>Actualicación de producto</h1>
+<h1 mat-dialog-title>Actualización de producto</h1>
 <div mat-dialog-content>
   <p>Ingresar los datos requeridos</p>
   <mat-form-field appearance="outline">
     <mat-label>Descripción</mat-label>
-    <input matInput [(ngModel)]="data.descripcion" type="text">
+    <input matInput [(ngModel)]="data.descripcion" type="text" (input)="validarnombre($event)">
   </mat-form-field>
   <mat-form-field *ngIf="tipoMedicamento == 'medicamento' " appearance="outline">
     <mat-label>Marca Comercial</mat-label>
-    <input matInput [(ngModel)]="data.marcaComercial" type="text">
+    <input matInput [(ngModel)]="data.marcaComercial" type="text" (input)="validarnombre($event)">
   </mat-form-field>
   <mat-form-field *ngIf="tipoMedicamento == 'abarrote' || tipoMedicamento == 'cosmetico' " appearance="outline">
     <mat-label>Nombre</mat-label>
-    <input matInput [(ngModel)]="data.nombre" type="text">
+    <input matInput [(ngModel)]="data.nombre" type="text" (input)="validarnombre($event)">
   </mat-form-field>
   <mat-form-field *ngIf="tipoMedicamento == 'medicamento' || tipoMedicamento == 'cosmetico' " appearance="outline">
     <mat-label>Laboratorio</mat-label>
-    <input matInput [(ngModel)]="data.laboratorio" type="text">
+    <input matInput [(ngModel)]="data.laboratorio" type="text" (input)="validarnombre($event)">
   </mat-form-field>
   <mat-form-field *ngIf="tipoMedicamento == 'medicamento'" appearance="outline">
     <mat-label>Sustancia</mat-label>
-    <input matInput [(ngModel)]="data.sustancia" type="text">
+    <input matInput [(ngModel)]="data.sustancia" type="text" (input)="validarnombre($event)">
   </mat-form-field>
   <mat-form-field *ngIf="tipoMedicamento == 'abarrote' || tipoMedicamento == 'cosmetico'" appearance="outline">
     <mat-label>Marca</mat-label>
-    <input matInput [(ngModel)]="data.marca" type="text">
+    <input matInput [(ngModel)]="data.marca" type="text" (input)="validarnombre($event)">
   </mat-form-field>
   <mat-form-field *ngIf="tipoMedicamento == 'medicamento' ">
     <mat-label>Tipo De Medicamento</mat-label>
     <mat-select name="tipoMedicamento" [(ngModel)]="data.tipoMedicamento">
       <mat-option value="patente">Patente</mat-option>
       <mat-option value="generico">Generico</mat-option>
+      <mat-option value="material">Material de Curación</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="false">Cancelar</button>
-  <button mat-button (click)="onClick(data)" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onClick(data)" cdkFocusInitial class="btn btn-success">Ok</button>
 </div>

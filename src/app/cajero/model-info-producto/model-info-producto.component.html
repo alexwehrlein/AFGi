@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>Informacion del producto.</h2>
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col-12">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              placeholder="Capture el codigo del articulo."
+              (keyup.enter)="buscarProductos($event.target)"
+              id="searchProductoInfo"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead class="">
+                    <th>ARTICULOS</th>
+                    <th class="tableTitle text-center">PRECIO</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>
+                        <p>
+                          <span class="tituloProducto">{{ art.nombre == null ? art.marcaComercial : art.nombre}} {{ art.descripcion == null? "" : "--"}}
+                          </span>
+                          <span class="desProducto">
+                            {{ art.descripcion == null? "" : "--"}} {{art.descripcion}}
+                            {{ art.sustancia == null? "" : "--"}} {{art.sustancia}}
+                            {{ art.laboratorio == null? "" : "--"}} {{art.laboratorio}}
+                            {{ art.marca == null? "" : "--"}}  {{art.marca}}
+                            {{ art.tipoMedicamento == null? "" : "--"}}  {{art.tipoMedicamento}}
+                          </span>
+                        </p>
+                      </th>
+                      <th class="text-center"> 
+                        {{ art.precio | currency }}
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+          </div>
+      </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</div>
+
+<app-spinner></app-spinner>

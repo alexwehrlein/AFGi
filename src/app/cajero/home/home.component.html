@@ -13,7 +13,18 @@
                             <i class="material-icons">attach_money</i>
                         </div>
                         <p class="card-category">Registro de gastos</p>
-                        <h3 class="card-title">Gastos</h3>
+                        <h3 class="card-title cardTitulo" (click)="gastos()">Gastos</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-red card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">point_of_sale</i>
+                        </div>
+                        <p class="card-category">Corte de caja</p>
+                        <h3 class="card-title cardTitulo" (click)="corte()">Corte</h3>
                     </div>
                 </div>
             </div>
@@ -32,13 +43,26 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
-                    <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">face</i>
                         </div>
                         <p class="card-category">Gestion de Clientes</p>
                         <a class="card-title cardTitulo" [routerLink]="['/cajero/clientes']"
                             >Clientes
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">store</i>
+                        </div>
+                        <p class="card-category">Gestion de Ventas</p>
+                        <a class="card-title cardTitulo" [routerLink]="['/cajero/ventas']"
+                            >Vestas
                         </a>
                     </div>
                 </div>

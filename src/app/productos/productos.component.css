@@ -18,8 +18,13 @@
 
 table {
     width: 100%;
+    table-layout: fixed;
 }
 
 h3 {
     text-align: center;
+}
+
+.colorFarmacia{
+    color: #00205B;
 }

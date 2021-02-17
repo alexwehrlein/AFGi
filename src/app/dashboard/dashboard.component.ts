@@ -13,7 +13,9 @@ export class DashboardComponent implements OnInit {
     token: string;
     username: string;
 
-    constructor(private usuarioService: UsuarioService, private router: Router) {}
+    constructor(private usuarioService: UsuarioService,
+         private router: Router
+         ) {}
 
     ngOnInit() {
         this.token = localStorage.getItem("token");

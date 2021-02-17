@@ -1,26 +1,27 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy} from "@angular/core";
 import { notify } from "../../notificaciones/notify";
 import { Router } from "@angular/router";
 import { SucursalService } from "../../services/sucursal.service";
 import { ModelPendientesComponent } from "../model-pendientes/model-pendientes.component";
 import { MatDialog } from "@angular/material/dialog";
-import { MatTableDataSource } from "@angular/material/table";
-import { MatPaginator } from "@angular/material/paginator";
+import { LoginService } from "app/services/login.service";
 
 @Component({
     selector: "app-navbar-cajero",
     templateUrl: "./navbar-cajero.component.html",
     styleUrls: ["./navbar-cajero.component.css"],
 })
-export class NavbarCajeroComponent implements OnInit {
+export class NavbarCajeroComponent implements OnInit , OnDestroy{
     
+    notificaciones;
     pendientes: any[] = [];
     token: string;
     dataSource;
     constructor(
         private router: Router,
         private sucursalService: SucursalService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private loginService: LoginService
     ) {}
 
     ngOnInit(): void {
@@ -31,14 +32,15 @@ export class NavbarCajeroComponent implements OnInit {
         setTimeout(() => {
             this.notificacionesHechas();
         }, 1000);
-        setInterval(() => {
-            if (this.token == null || this.token == "") {
-                clearInterval();
-            } else {
-                this.notificacionesHechas();
-            }
+
+        this.notificaciones = setInterval(() => {
+            this.notificacionesHechas();
         }, 10000);
     }
+
+    ngOnDestroy() {
+        clearInterval(this.notificaciones);
+      }
 
     notificacionesHechas() {
         let datos: any = localStorage.getItem("datosUser");
@@ -171,5 +173,11 @@ export class NavbarCajeroComponent implements OnInit {
                 this.notificacionesHechas();
             }
         });
+    }
+
+    logout(){
+        this.loginService.logout(this.token).subscribe(res => {
+            this.router.navigate(["login"]);
+        })
     }
 }

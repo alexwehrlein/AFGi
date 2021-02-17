@@ -9,10 +9,12 @@ import { MatDialog } from "@angular/material/dialog";
 import { DialogProductosComponent } from "./dialog-productos/dialog-productos.component";
 import { DialogProductosUpdateComponent } from "./dialog-productos-update/dialog-productos-update.component";
 import { DialogProductosTrasferenciaComponent } from "./dialog-productos-trasferencia/dialog-productos-trasferencia.component";
+import { ModalPrecioProductoComponent } from "./modal-precio-producto/modal-precio-producto.component";
 import { Proveedor } from "../models/proveedor";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { Sucursal } from "../models/sucursal";
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
     selector: "app-productos",
@@ -65,7 +67,8 @@ export class ProductosComponent implements OnInit {
         private formBuilder: FormBuilder,
         private router: Router,
         private productoInyectable: ProductoService,
-        private proveedoresInyectable: ProveedorService
+        private proveedoresInyectable: ProveedorService,
+        private spinner: NgxSpinnerService,
     ) {}
 
     displayedColumns: string[] = ["codigo", "nombre", "descripcion", "agregar"];
@@ -76,7 +79,6 @@ export class ProductosComponent implements OnInit {
     displayedColumnsMedicamento: string[] = [
         "codigo",
         "descripcion",
-        "marcaComercial",
         "sustancia",
         "laboratorio",
         "tipoMedicamento",
@@ -373,6 +375,22 @@ export class ProductosComponent implements OnInit {
         });
     }
 
+    openDialogCambiarPrecio(data: Producto):void{
+        const dialogRef = this.dialog.open(ModalPrecioProductoComponent, {
+            width: "400px",
+            data: {
+                ...data
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            //console.log(result)
+            if (result == undefined) {
+                this.octenerProductos();
+            }
+        });
+    }
+
     openDialogTrasferencia(data: Producto): void {
         const dialogRef = this.dialog.open(DialogProductosTrasferenciaComponent, {
             width: "650px",
@@ -442,6 +460,7 @@ export class ProductosComponent implements OnInit {
     }
 
     comprar() {
+
         let listaCompra: any = localStorage.getItem("listaCompra");
         listaCompra = JSON.parse(listaCompra);
 
@@ -454,6 +473,8 @@ export class ProductosComponent implements OnInit {
             notify("Elejir un proveedor.", "danger");
             return;
         }
+
+        this.spinner.show();
 
         let data = {
             idProveedor: this.idProveedor,
@@ -470,8 +491,10 @@ export class ProductosComponent implements OnInit {
                 this.octenerListaCompra();
                 this.octenerProductos();
                 this.dataSourceCompra.data = this.productosCompra;
+                this.spinner.hide();
             },
             (res) => {
+                this.spinner.hide();
                 if (res.codigo == 3) {
                     notify(res.mensaje, "danger");
                     setTimeout(() => {
@@ -483,6 +506,7 @@ export class ProductosComponent implements OnInit {
     }
 
     guardarTraspaso() {
+
         let listaTraspaso: any = localStorage.getItem("listaTraspasoServis");
         let listaTraspasoCompleto: any = localStorage.getItem("listaTraspaso");
 
@@ -503,6 +527,8 @@ export class ProductosComponent implements OnInit {
             return;
         }
 
+        this.spinner.show();
+
         this.productoInyectable.registrarTraspaso(listaTraspaso, this.token).subscribe(
             (res) => {
                 notify("El traspaso fue correcto. AVISAR A LAS FARMACIAS", "success");
@@ -511,8 +537,10 @@ export class ProductosComponent implements OnInit {
                 this.octenerProductos();
                 this.octenerListaTraspaso();
                 this.dataSourceTraspaso.data = this.productosTraspaso;
+                this.spinner.hide();
             },
             (res) => {
+                this.spinner.hide();
                 if (res.codigo == 3) {
                     notify(res.mensaje, "danger");
                     setTimeout(() => {
@@ -544,5 +572,29 @@ export class ProductosComponent implements OnInit {
 
         this.octenerListaTraspaso();
         this.dataSourceTraspaso.data = this.productosTraspaso;
+    }
+
+    validarnombre(event){
+        var out = '';
+        var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZàèìòùÜ ';
+        
+        for (var i=0; i<event.target.value.length; i++)
+           if (filtro.indexOf(event.target.value.charAt(i)) != -1) 
+                 
+              out += event.target.value.charAt(i);
+        
+          event.target.value = out;
+    }
+
+    validarNumero(event){
+        var out = '';
+        var filtro = '1234567890';
+        
+        for (var i=0; i<event.target.value.length; i++)
+           if (filtro.indexOf(event.target.value.charAt(i)) != -1) 
+                 
+              out += event.target.value.charAt(i);
+        
+          event.target.value = out;
     }
 }

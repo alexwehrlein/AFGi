@@ -1,0 +1,147 @@
+<app-navbar-cajero></app-navbar-cajero>
+<div class="container-fluid" class="mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-secondary">
+          <h4 class="card-title">Ventas</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5">
+              <mat-form-field>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Capture el codigo del articulo."
+                  (keyup.enter)="buscarCodigo($event.target)"
+                  id="searchProducto"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>Descripcion del producto</mat-label>
+                <input type="text"
+                       aria-label="Number"
+                       matInput
+                       [formControl]="myControl"
+                       [matAutocomplete]="auto"
+                       (keyup.enter)="buscarCodigo($event.target)"
+                       >
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option.codigo">
+                    {{option.codigo}}--{{option.descripcion}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              Ventas Pausadas
+            </div>
+          </div>
+          <div class="row ventas">
+            <div class="col-9">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead class="">
+                    <th>ARTICULOS</th>
+                    <th class="tableTitle text-center">CANTIDAD</th>
+                    <th class="tableTitle text-center">TOTAL</th>
+                    <th class="tableTitle text-center">OPCCION</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let art of productosVenta; let i = index">
+                      <th>
+                        <p>
+                          <span class="tituloProducto">{{ art.nombre == null ? art.marcaComercial : art.nombre}} --
+                          </span>
+                          <span class="desProducto">
+                            -- {{art.descripcion}}
+                            {{ art.sustancia == null? "" : "--"}} {{art.sustancia}}
+                            {{ art.laboratorio == null? "" : "--"}} {{art.laboratorio}}
+                            {{ art.tipoMedicamento == null? "" : "--"}}  {{art.tipoMedicamento}}
+                          </span>
+                        </p>
+                      </th>
+                      <th class="text-center">
+                        <mat-form-field class="example-full-width">
+                          <input 
+                            matInput 
+                            [value]="art.cantidadVenta" 
+                            type="number" 
+                            (input)="onChangeCantidad($event)"
+                            [attr.data-index]="i"
+                            [attr.data-codigo]="art.codigo"
+                            class="centrar"
+                            min="1"
+                            >
+                        </mat-form-field>
+                      </th>
+                      <th class="text-center">
+                        {{art.total}}
+                      </th>
+                      <th class="text-center">
+                        <button 
+                        class="mdc-icon-button material-icons btnElinarproducto" 
+                        data-toggle="tooltip" data-placement="top" title="Eliminar Producto."
+                        (click)="eliminarProducto(i)">clear</button>
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col">
+              <div class="list-group">
+                  <li 
+                  class="list-group-item d-flex justify-content-between align-items-center ventaPausada" 
+                  *ngFor="let art of ventasPausadas">
+                    <span class="manita" (click)="retornarVentaPausada(art)">Productos en pausa: {{ art.productos.length}}</span>
+                    <span class="badge badge-danger badge-pill material-icons manita eliminarVentaPausada" (click)="eliminarVentaPausada(art.idVenta)">clear</span>
+                  </li>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <button class="accionesVenta" (click)="modalVenta()">
+                <span class="material-icons"> point_of_sale </span> <br />
+                Ventas
+              </button>
+              <button class="accionesVenta" (click)="devolucion()">
+                <span class="material-icons"> autorenew </span> <br />
+                Devoluciones
+              </button>
+              <button class="accionesVenta" (click)="descuentos()">
+                <span class="material-icons"> money_off </span> <br />
+                Descuentos
+              </button>
+              <button class="accionesVenta" (click)="pausarVenta()">
+                <span class="material-icons"> remove_shopping_cart </span> <br />
+                Pausar
+              </button>
+              <button class="accionesVenta" (click)="consultorio()">
+                <span class="material-icons"> wysiwyg </span> <br />
+                Consultorio
+              </button>
+              <button class="accionesVenta" (click)="limpiarVenta()">
+                <span class="material-icons"> cancel_presentation </span> <br />
+                Cancelar
+              </button>
+              <button class="accionesVenta" (click)="infoProducto()">
+                <span class="material-icons"> price_check </span> <br />
+                Precio
+              </button>
+            </div>
+            <div class="col laberTotalVenta">
+              <label class="totalVenta"> {{ total | currency }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-spinner></app-spinner>

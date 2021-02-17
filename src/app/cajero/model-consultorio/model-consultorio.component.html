@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Consultorio.</h2>
+<div mat-dialog-content>
+    <div class="col-md-12">
+        <mat-form-field class="example-full-width">
+            <mat-label>Seleccione tipo de venta de consultorio.</mat-label>
+            <mat-select name="idConsultorio" (selectionChange)="onChange($event.value)">
+                <mat-option
+                    *ngFor="let art of consultorio"
+                    [value]="art.idConsultorio"
+                    >{{ art.nombre }}</mat-option
+                >
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-md-12" *ngIf="consultorioVenta.idConsultorio != null"> Precio: {{ consultorioVenta.precio | currency }}</div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+    <button mat-button cdkFocusInitial (click)="venta()" class="btn btn-success">Aceptar</button>
+</div>
+
+<app-spinner></app-spinner>

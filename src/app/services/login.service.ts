@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable , throwError  } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Login } from '../models/login'
@@ -21,5 +21,19 @@ export class LoginService {
       })
     )
   }
+
+  logout(token:string,user?: Login): Observable<any>{
+    var headers = {
+      headers: new HttpHeaders()
+        .set('Authorization' , `Bearer ${token}`)
+    }
+    return this.http.post(environment.URL+'usuario/logout' , user , headers).pipe(
+      catchError((err) => {
+        return throwError(err.error);
+      })
+    )
+  }
+
+
 
 }

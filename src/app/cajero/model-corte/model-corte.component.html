@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Corte De Caja.</h2>
+<div mat-dialog-content>
+    <mat-form-field appearance="outline">
+        <mat-label>Saldo de recargas Finales
+            </mat-label>
+        <input matInput [(ngModel)]="recargas" type="text" (input)="validarNumero($event)"/>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+    <button mat-button (click)="guardar()" cdkFocusInitial class="btn btn-success">Guardar</button>
+</div>
+
+<app-spinner></app-spinner>

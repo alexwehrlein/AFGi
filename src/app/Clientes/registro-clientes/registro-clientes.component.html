@@ -17,6 +17,7 @@
                                             type="text"
                                             name="nombre"
                                             formControlName="nombre"
+                                            (input)="validarnombre($event)"
                                         />
                                     </mat-form-field>
                                 </div>
@@ -32,6 +33,7 @@
                                             oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                             name="telefono"
                                             formControlName="telefono"
+                                            (input)="validarNumero($event)"
                                         />
                                     </mat-form-field>
                                 </div>
@@ -55,7 +57,6 @@
                                             name="descuentoPatente"
                                             formControlName="descuentoPatente"
                                         >
-                                            <mat-option value="0">0</mat-option>
                                             <mat-option value="5">5</mat-option>
                                             <mat-option value="10">10</mat-option>
                                         </mat-select>
@@ -68,7 +69,6 @@
                                             name="descuentoGenerico"
                                             formControlName="descuentoGenerico"
                                         >
-                                            <mat-option value="0">0</mat-option>
                                             <mat-option value="5">5</mat-option>
                                             <mat-option value="10">10</mat-option>
                                             <mat-option value="15">15</mat-option>
@@ -85,7 +85,6 @@
                                             name="descuentoMaterial"
                                             formControlName="descuentoMaterial"
                                         >
-                                            <mat-option value="0">0</mat-option>
                                             <mat-option value="5">5</mat-option>
                                             <mat-option value="10">10</mat-option>
                                             <mat-option value="15">15</mat-option>
