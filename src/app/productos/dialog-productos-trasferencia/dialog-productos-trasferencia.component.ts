@@ -80,7 +80,7 @@ export class DialogProductosTrasferenciaComponent implements OnInit {
     }
 
     onClick(data: DialogData): void {
-        console.log(data);
+        //console.log(data);
 
         let listaTraspaso: any = localStorage.getItem("listaTraspasoServis");
         let listaTraspasoCompleto: any = localStorage.getItem("listaTraspaso");
@@ -114,7 +114,7 @@ export class DialogProductosTrasferenciaComponent implements OnInit {
         this.sucurdales.map((sucursal, index) => {
             sucursalesCantidad.push({
                 nombre: sucursal.nombre,
-                cantidad: data.cantidad[index],
+                cantidad: (data.cantidad[index] == undefined)?0:data.cantidad[index],
             });
         });
 
@@ -135,7 +135,7 @@ export class DialogProductosTrasferenciaComponent implements OnInit {
                     productosPP: [
                         {
                             codigo: data.codigo,
-                            cantidad: data.cantidad[index],
+                            cantidad: (data.cantidad[index] == undefined)?0:data.cantidad[index],
                         },
                     ],
                 });
@@ -153,14 +153,14 @@ export class DialogProductosTrasferenciaComponent implements OnInit {
                         productosPP: [
                             {
                                 codigo: data.codigo,
-                                cantidad: data.cantidad[index],
+                                cantidad: (data.cantidad[index] == undefined)?0:data.cantidad[index],
                             },
                         ],
                     });
                 } else {
                     listaTraspaso[encontroSucursal].productosPP.push({
                         codigo: data.codigo,
-                        cantidad: data.cantidad[index],
+                        cantidad: (data.cantidad[index] == undefined)?0:data.cantidad[index],
                     });
                 }
             }

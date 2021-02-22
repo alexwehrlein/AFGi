@@ -29,6 +29,7 @@ export interface ProductoVentaInterface {
   cantidadVenta: number;
   precio: number;
   total: number;
+  cantidadDevolucion:number
 }
 
 @Component({
@@ -83,11 +84,14 @@ export class VentasComponent implements OnInit {
     return this.productos.filter(option => option.descripcion.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  async octenerProductos() {
+  octenerProductos() {
+    console.log("se llamo a productos");
     let datosUser: any = localStorage.getItem("datosUser");
     datosUser = JSON.parse(datosUser);
 
-    await this.productoService
+    this.productos.length = 0;
+
+    this.productoService
       .octenrtProductosSucursal(this.token, "medicamento", datosUser.idSucursal)
       .subscribe(
         (res) => {
@@ -103,7 +107,7 @@ export class VentasComponent implements OnInit {
         }
       );
 
-    await this.productoService
+    this.productoService
       .octenrtProductosSucursal(this.token, "abarrote", datosUser.idSucursal)
       .subscribe(
         (res) => {
@@ -119,7 +123,7 @@ export class VentasComponent implements OnInit {
         }
       );
 
-    await this.productoService
+    this.productoService
       .octenrtProductosSucursal(this.token, "cosmetico", datosUser.idSucursal)
       .subscribe(
         (res) => {
@@ -168,7 +172,7 @@ export class VentasComponent implements OnInit {
         var f = new Date();
         let ticket = `
         <div style="font-size:13px;">
-        <div style="margin-bottom: -35px;text-align: center;" class="logo-img">
+        <div style="margin-top: -44px; margin-bottom: -35px;text-align: center;" class="logo-img">
           <img  style="width: 132px;" src="./assets/img/logo-gi.png"/>
         </div>
         <p>FARMACIAS GI</p>
@@ -177,8 +181,10 @@ export class VentasComponent implements OnInit {
         <p style="margin-top:-15px;">TURNO:  ${result.turno} </p>
         <p style="margin-top:-15px;">Fecha:  ${f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear()} </p>
         <p style="margin-top:-15px;">==========================================</p>
+        <div style="text-align: center;">
         <p style="margin-top:-15px;">¡Gracias por su compra!</p>
         <p style="margin-top:-15px;">¡Expertos en tu salud!</p>
+        </div>
         </div>
         `;
 
@@ -266,6 +272,7 @@ export class VentasComponent implements OnInit {
     //console.log(this.totalPatente + " patente");
     //console.log(this.totalMaterialCuracio + " material");
     //console.log(this.totalPAC + " lo demas ");
+    console.log(this.productosVenta);
   }
 
   buscarCodigo(ev) {
@@ -277,13 +284,13 @@ export class VentasComponent implements OnInit {
       return;
     }
 
-    if (art.cantidad < 0) {
+    if (art.cantidad <= 0) {
       notify("No hay inventario del producto.", "danger");
       ev.value = "";
       return;
     }
 
-    this.agregrarProductos(art , 1 , ev);
+    this.agregrarProductos(art , 1 , 0, ev);
 
     console.log(art);
     ev.value = "";
@@ -354,7 +361,7 @@ export class VentasComponent implements OnInit {
   }
 
   limpiarVenta() {
-    this.octenerProductos();
+    //this.octenerProductos();
     this.productosVenta.length = 0;
     this.total = 0;
     this.totalPatente = 0;
@@ -413,29 +420,57 @@ export class VentasComponent implements OnInit {
       "productosVenta": productos
     };
 
-    this.ventaService.guardarVenta(venta, this.token).subscribe(
-      (res) => {
-        console.log(res);
-        if(res.codigo == "0"){
-          this.octenerProductos();
-          this.octenerVentasPausadas();
-          this.ticketVenta(res.idVenta,datos.nombre,cambio,importe);
-          notify(res.mensaje, "success");
-        }else if(res.codigo == "500"){
+    if(this.tipoVenta == "devolucion"){
+      this.ventaService.devolucion(this.token , this.idVenta ,datos.idSucursal ).subscribe(res => {
+        this.ventaService.guardarVenta(venta, this.token).subscribe(
+          (res) => {
+            console.log(res);
+            if(res.codigo == "0"){
+              this.octenerProductos();
+              this.octenerVentasPausadas();
+              this.ticketVenta(res.idVenta,datos.nombre,cambio,importe);
+              notify(res.mensaje, "success");
+            }else if(res.codigo == "500"){
+              this.spinner.hide();
+              notify(res.mensaje, "danger");
+            }
+          },
+          (res) => {
+            this.spinner.hide();
+            if (res.codigo == 3) {
+              notify(res.mensaje, "danger");
+              setTimeout(() => {
+                this.router.navigate(["login"]);
+              }, 1000);
+            }
+          }
+        );
+      });
+    }else{
+      this.ventaService.guardarVenta(venta, this.token).subscribe(
+        (res) => {
+          console.log(res);
+          if(res.codigo == "0"){
+            this.octenerProductos();
+            this.octenerVentasPausadas();
+            this.ticketVenta(res.idVenta,datos.nombre,cambio,importe);
+            notify(res.mensaje, "success");
+          }else if(res.codigo == "500"){
+            this.spinner.hide();
+            notify(res.mensaje, "danger");
+          }
+        },
+        (res) => {
           this.spinner.hide();
-          notify(res.mensaje, "danger");
+          if (res.codigo == 3) {
+            notify(res.mensaje, "danger");
+            setTimeout(() => {
+              this.router.navigate(["login"]);
+            }, 1000);
+          }
         }
-      },
-      (res) => {
-        this.spinner.hide();
-        if (res.codigo == 3) {
-          notify(res.mensaje, "danger");
-          setTimeout(() => {
-            this.router.navigate(["login"]);
-          }, 1000);
-        }
-      }
-    );
+      );
+    }
     
   }
 
@@ -444,7 +479,7 @@ export class VentasComponent implements OnInit {
         var f = new Date();
         let ticket = `
         <div style="font-size:13px;">
-        <div style="margin-bottom: -35px;text-align: center;" class="logo-img">
+        <div style="margin-top: -44px; margin-bottom: -35px;text-align: center;" class="logo-img">
           <img  style="width: 132px;" src="./assets/img/logo-gi.png"/>
         </div>
         <p>COMPROBANTE DE VENTA</p>
@@ -479,12 +514,14 @@ export class VentasComponent implements OnInit {
         <p style="margin-top:-15px;">PAGO CLIENTE:       <span style="margin-left:11px;">$ ${importe}</span></p>
         <p style="margin-top:-15px;">CAMBIO:             <span style="margin-left:50px;">$ ${cambio.toFixed(2)}</span></p>
         <p style="margin-top:-15px;display:${this.cliente.idCliente == null  ? "none" : "block"}">Usted se ahorro con descuento $: ${(this.totalPatenteDes + this.totalMaterialCuracioDes + this.totalGenericoDes)}</p>
+        <div style="text-align: center;">
         <p style="margin-top:-15px;">¡Gracias por su compra!</p>
         <p style="margin-top:-15px;">Las devoluciones se realizan unicamente</p>
         <p style="margin-top:-15px;">por otro producto, no se hace reembolso</p>
         <p style="margin-top:-15px;">del dinero, el periodo de la devolucion</p>
         <p style="margin-top:-15px;">es de 7 dias naturales</p>
         <p style="margin-top:-15px;">¡Conserve su ticket!</p>
+        </div>
         </div>
         `;
 
@@ -511,13 +548,13 @@ export class VentasComponent implements OnInit {
     art.productos.map(pausa => {
       let art: Producto = this.productos.find((res) => res.codigo == pausa.codigo);
       if(art != undefined || art.cantidad > 0 ){
-        this.agregrarProductos( art , pausa.cantidad );
+        this.agregrarProductos( art , pausa.cantidad , 0);
       }
     })
     this.spinner.hide();
   }
 
-  agregrarProductos(art , cantidadagregar , ev?){
+  agregrarProductos(art , cantidadagregar , cantidadDevolucion ,  ev?){
     let artVenta = this.productosVenta.findIndex(
       (producto) => producto.codigo == art.codigo
     );
@@ -536,21 +573,25 @@ export class VentasComponent implements OnInit {
         precio: art.precio,
         total: art.precio * cantidadagregar, //
         tipoMedicamento: art.tipoMedicamento,
+        cantidadDevolucion:cantidadDevolucion
       };
       this.productosVenta.push(artElejido);
     } else {
       let cantidadLlevada: number = this.productosVenta[artVenta].cantidadVenta;
       cantidadLlevada = cantidadLlevada + 1;
-      if(this.tipoVenta == "venta"){
-        if (cantidadLlevada > art.cantidad) {
-          notify(
-            "No se cuenta con el  inventario suficiente del producto. " ,
-            "danger"
-          );
-          ev.value = "";
-          return;
-        }
-    }
+
+      let catidadConDevolucion:number = (art.cantidad +  this.productosVenta[artVenta].cantidadDevolucion)
+      console.log(cantidadLlevada);
+      console.log(catidadConDevolucion);
+      if (cantidadLlevada > catidadConDevolucion) {
+        notify(
+          "No se cuenta con el  inventario suficiente del producto. " ,
+          "danger"
+        );
+        ev.value = "";
+        return;
+      }
+      
       this.productosVenta[artVenta].cantidadVenta = cantidadLlevada;
       let total = this.productosVenta[artVenta].total;
       this.productosVenta[artVenta].total = total + art.precio;
@@ -560,6 +601,7 @@ export class VentasComponent implements OnInit {
   }
 
   devolucion(){
+    this.limpiarVenta();
     const dialogRef = this.dialog.open(ModalDevolucionesComponent, {
       width: "80%",
       disableClose: true,
@@ -568,12 +610,12 @@ export class VentasComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result)
       if(result != null){
-        this.limpiarVenta();
         this.totalDevolucion =  result.total;
         this.tipoVenta = result.tipo;
+        this.idVenta = result.idVenta;
         result.productos.map( result => {
           let art: Producto = this.productos.find((res) => res.codigo == result.codigo);
-          this.agregrarProductos(art , result.cantidad )
+          this.agregrarProductos(art , result.cantidad , result.cantidad )
         })
       }
     });
@@ -582,22 +624,26 @@ export class VentasComponent implements OnInit {
   onChangeCantidad(ev){
     let index = ev.target.getAttribute("data-index");
     let codigo = ev.target.getAttribute("data-codigo");
+    let cantidadDevolucion:number = parseInt(ev.target.getAttribute("data-devolucion"));
     let art: Producto = this.productos.find((res) => res.codigo == codigo);
-    let cantidad = ev.target.value;
-    if (cantidad > art.cantidad) {
-      ev.target.value = cantidad - art.cantidad;
+    let cantidad:number = parseInt(ev.target.value);
+    let cantidadFinal:number = (art.cantidad + cantidadDevolucion)
+
+    if (cantidad > cantidadFinal) {
       notify(
-        "No se cuenta con el  inventario suficiente del producto. ",
+        "No se cuenta con el  inventario suficiente del producto. " ,
         "danger"
       );
+      ev.target.value = cantidad - 1;
       return;
     }
+
     this.productosVenta[index].total = cantidad * art.precio;
     this.productosVenta[index].cantidadVenta = cantidad;
     this.totalVenta();
 }
 
-eliminarProducto(index){
+  eliminarProducto(index){
   this.productosVenta.splice(index,1);
   this.totalVenta();
 }
@@ -616,6 +662,15 @@ modalVenta(){
       }
   }
 
+  var currentTime= moment();
+  var startTime = moment('08:00 am', "HH:mm a");
+  var endTime = moment('10:00 pm', "HH:mm a");
+  let amIBetween = currentTime.isBetween(startTime , endTime); 
+
+  if(!amIBetween){
+    notify("Horario no disponible para ventas" , "danger");
+    return;
+  }
 
   const dialogRef = this.dialog.open(ModalVentaComponent, {
     width: "30%",

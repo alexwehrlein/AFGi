@@ -756,14 +756,14 @@
                                                 matInput
                                                 type="text"
                                                 placeholder="Buscar"
-                                                (keyup)="applyFilter($event.target.value)"
+                                                (keyup)="applyFilterG($event.target.value)"
                                             />
                                         </mat-form-field>
                                     </div>
                                     <div class="col-md-12">
                                         <table
                                             mat-table
-                                            [dataSource]="dataSource"
+                                            [dataSource]="dataSourceG"
                                             class="mat-elevation-z8"
                                         >
                                             <!--- Note that these columns can be defined in any order.
@@ -826,7 +826,7 @@
                                             ></tr>
                                         </table>
                                         <mat-paginator
-                                            #matPaginator
+                                            #matPaginatorG
                                             [pageSizeOptions]="[5, 10, 20]"
                                             showFirstLastButtons
                                         ></mat-paginator>
@@ -894,7 +894,7 @@
                                                         [matTooltipPosition]="'above'"
                                                         class="btn btn-primary btn-link btn-sm btn-just-icon"
                                                     >
-                                                        <i class="material-icons">create</i>
+                                                        <i class="material-icons colorFarmacia">create</i>
                                                     </button>
                                                     <button
                                                         (click)="

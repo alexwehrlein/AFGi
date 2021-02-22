@@ -16,6 +16,7 @@ export class NavbarCajeroComponent implements OnInit , OnDestroy{
     notificaciones;
     pendientes: any[] = [];
     token: string;
+    rol:string;
     dataSource;
     constructor(
         private router: Router,
@@ -26,9 +27,22 @@ export class NavbarCajeroComponent implements OnInit , OnDestroy{
 
     ngOnInit(): void {
         this.token = localStorage.getItem("token");
+        this.rol = localStorage.getItem("rol");
+
         if (this.token == null) {
             this.router.navigate(["login"]);
         }
+
+        if(this.rol === "ROLE_CAJERO"){
+            //this.router.navigate(["cajero/home"]);
+        }else if(this.rol === "ROLE_ADMIN"){
+            this.router.navigate(["dashboard"]);
+        }else if(this.rol === "ROLE_USER"){
+            //this.router.navigate(["login"]);
+        }else{
+            console.log("no existe rol");
+        }
+
         setTimeout(() => {
             this.notificacionesHechas();
         }, 1000);

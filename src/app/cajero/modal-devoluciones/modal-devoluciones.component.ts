@@ -145,6 +145,7 @@ export class ModalDevolucionesComponent implements OnInit {
     this.dialogRef.close({
       productos: this.productos,
       total: this.venta.total,
+      idVenta: this.venta.idVenta,
       tipo: "devolucion"
     })
 

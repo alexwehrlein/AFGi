@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
         var f = new Date();
         let ticket = `
         <div style="font-size:13px;">
-        <div style="margin-bottom: -35px;text-align: center;" class="logo-img">
+        <div style="margin-top: -44px; margin-bottom: -35px;text-align: center;" class="logo-img">
             <img  style="width: 132px;" src="./assets/img/logo-gi.png"/>
         </div>
         <p>*****CORTE DE CAJA*****</p>
@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
         <p style="margin-top:-11px;">SUCURSAL: ${datos.sucursal}</p>
         <p style="margin-top:-11px;">IGUALA DE LA INDEPENDENCIA, GRO</p>
         <p style="margin-top:-11px;">Fecha:  ${f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear()} </p>
-        <p style="margin-top:-11px;">***********INGRESOS SISTEMAS***********</p>
+        <p style="margin-top:-11px;">*******INGRESOS SISTEMAS*******</p>
         <p style="margin-top:-11px;">VENTAS FARMACIA: $${res.totalVentas}</p>
         <p style="margin-top:-11px;">****************GASTOS****************</p>`;
         
@@ -106,7 +106,7 @@ export class HomeComponent implements OnInit {
         <p style="margin-top:-11px;"><RECARGAS INICIALES: $ ${res.saldoRecargasInicioTurno}</p>
         <p style="margin-top:-11px;">RECARGAS FINALES: $ ${res.saldoRecargasFinTurno}</p>
         <p style="margin-top:-11px;">TOTAL VENTAS RECARGAS: $ ${res.totalGananciaRecargas}</p>
-        <p style="margin-top:-11px;">***********TOTAL DE VENTAS***********</p>
+        <p style="margin-top:-11px;">*******TOTAL DE VENTAS*******</p>
         <p style="margin-top:-11px;">VENTAS TOTALES: $ ${res.totalVentas}</p>
         <p style="margin-top:-11px;">GASTOS TOTALES: $ ${res.totalGastos}</p>
         <p style="margin-top:-11px;">*************************************</p>
@@ -170,7 +170,7 @@ export class HomeComponent implements OnInit {
         var f = new Date();
         let ticket = `
         <div style="font-size:13px;">
-        <div style="margin-bottom: -35px;text-align: center;" class="logo-img">
+        <div style="margin-top: -44px; margin-bottom: -35px;text-align: center;" class="logo-img">
             <img  style="width: 132px;" src="./assets/img/logo-gi.png"/>
         </div>
         <p>CORTE DE CAJA</p>
@@ -178,9 +178,9 @@ export class HomeComponent implements OnInit {
         <p style="margin-top:-11px;>FARMACIAS GI</p>
         <p style="margin-top:-11px;">IGUALA DE LA INDEPENDENCIA, GRO</p>
         <p style="margin-top:-11px;">Fecha:  ${f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear()} </p>
-        <p style="margin-top:-11px;">********* VENTAS CONSULTORIO *********</p>
+        <p style="margin-top:-11px;">***** VENTAS CONSULTORIO *****</p>
         <p style="margin-top:-11px;">* TOTAL VENTAS CONSULTORIO: $ ${res.totalVentasConsultorio}</p>
-        <p style="margin-top:-11px;">*********** DESCRIPCION ***************</p>
+        <p style="margin-top:-11px;">******* DESCRIPCION *******</p>
         <p style="margin-top:-11px;">CONSULTAS: ${consulta} TOTAL: $ ${ consulta * 35}</p>
         <p style="margin-top:-11px;">APLICACIONES: ${aplicaciones} TOTAL: $ ${ aplicaciones * 15}</p>
         <p style="margin-top:-11px;">T/A: ${tomaPrecion} TOTAL: $ ${tomaPrecion * 15}</p>

@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit {
       mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    rol:string;
 
     constructor(location: Location,  private element: ElementRef, private router: Router) {
       this.location = location;
@@ -21,6 +22,16 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit(){
+        this.rol = localStorage.getItem("rol");  
+        if(this.rol === "ROLE_CAJERO"){
+            this.router.navigate(["cajero/home"]);
+        }else if(this.rol === "ROLE_ADMIN"){
+            //this.router.navigate(["dashboard"]);
+        }else if(this.rol === "ROLE_USER"){
+            //this.router.navigate(["login"]);
+        }else{
+            console.log("no existe rol");
+        }
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];

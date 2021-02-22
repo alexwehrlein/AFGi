@@ -94,7 +94,7 @@ devolucion(token: string , idVenta:number , idSucursal:number): Observable<any> 
     var headers = {
         headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
     };
-    return this.http.put<any>(environment.URL + `venta/devolucion/${idVenta}/${idSucursal}` , headers).pipe(
+    return this.http.put<any>(environment.URL + `venta/devolucion/${idVenta}/${idSucursal}` , {} ,headers).pipe(
         catchError((err) => {
             return throwError(err.error);
         })

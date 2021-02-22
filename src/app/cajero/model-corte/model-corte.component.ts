@@ -35,7 +35,11 @@ export class ModelCorteComponent implements OnInit {
 
     this.ventaService.corte(corte , this.token ).subscribe( res => {
       this.spinner.hide();
+      if(res.codigo == "0"){
         this.dialogRef.close({data:res,retorno:true});
+      }else if(res.codigo == "5"){
+        notify(res.mensaje, "danger");
+      }
     });
 
   }

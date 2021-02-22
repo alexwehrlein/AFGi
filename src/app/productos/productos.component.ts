@@ -23,6 +23,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class ProductosComponent implements OnInit {
     @ViewChild("matPaginator", { read: MatPaginator }) paginator: MatPaginator;
+    @ViewChild("matPaginatorG", { read: MatPaginator }) paginatorG: MatPaginator;
     @ViewChild("paginatorCompra", { read: MatPaginator })
     paginatorCompra: MatPaginator;
 
@@ -57,6 +58,7 @@ export class ProductosComponent implements OnInit {
     dataSource;
     dataSourceCompra;
     dataSourceTraspaso;
+    dataSourceG;
     idProveedor: number = 0;
     dataSourceMedicamento;
     dataSourceAbarrotes;
@@ -176,7 +178,9 @@ export class ProductosComponent implements OnInit {
             (productos) => {
                 this.ELEMENT_DATA = this.ELEMENT_DATA.concat(productos);
                 this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+                this.dataSourceG = new MatTableDataSource(this.ELEMENT_DATA);
                 this.dataSource.paginator = this.paginator;
+                this.dataSourceG.paginator = this.paginatorG;
                 this.dataSourceMedicamento.paginator = this.paginatorMedicamento;
 
                 this.ELEMENT_DATA_COSMETICOS = productos;
@@ -444,6 +448,10 @@ export class ProductosComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
+    applyFilterG(filterValue: string) {
+        this.dataSourceG.filter = filterValue.trim().toLowerCase();
+    }
+
     applyFilterMedicamento(filterValue: string) {
         this.dataSourceMedicamento.filter = filterValue.trim().toLowerCase();
     }
@@ -576,7 +584,7 @@ export class ProductosComponent implements OnInit {
 
     validarnombre(event){
         var out = '';
-        var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZàèìòùÜ ';
+        var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZàèìòùÜ-123456789 ';
         
         for (var i=0; i<event.target.value.length; i++)
            if (filtro.indexOf(event.target.value.charAt(i)) != -1) 
