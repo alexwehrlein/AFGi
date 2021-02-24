@@ -56,7 +56,7 @@ export class ModelConsultorioComponent implements OnInit {
     }
 
     this.ventaService.ventaConsulta(this.token , consulta).subscribe( res => {
-      console.log(res);
+      //console.log(res);
       this.spinner.hide();
       if(res.codigo == "0"){
         notify(res.mensaje, "success");

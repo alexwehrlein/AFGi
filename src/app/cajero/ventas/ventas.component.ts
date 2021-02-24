@@ -56,6 +56,7 @@ export class VentasComponent implements OnInit {
   tipoVenta:string = "venta";
   myControl = new FormControl();
   filteredOptions: Observable<Producto[]>;
+  datosUser:any;
 
   constructor(
     private productoService: ProductoService,
@@ -70,11 +71,16 @@ export class VentasComponent implements OnInit {
     if (this.token == null) {
       this.router.navigate(["login"]);
     }
+    let datos: any = localStorage.getItem("datosUser");
+    this.datosUser = JSON.parse(datos);
+
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
     );
-    this.octenerProductos();
+    
+    //this.octenerProductos();
+    this.octenerTodosLosProductos();
     this.octenerVentasPausadas();
   }
 
@@ -82,6 +88,20 @@ export class VentasComponent implements OnInit {
     const filterValue = value.toLowerCase();
 
     return this.productos.filter(option => option.descripcion.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  octenerTodosLosProductos(){
+    console.log("cargando... Productos");
+    this.spinner.show();
+    let productos = this.productoService.getAsyncProductosSucursales(this.token,this.datosUser.idSucursal);
+    productos.then(res => {
+      console.log("productos cargados");
+      this.spinner.hide();
+      this.productos = res;
+    }).catch(err => {
+      console.error(err);
+      this.spinner.hide();
+    })
   }
 
   octenerProductos() {
@@ -140,6 +160,15 @@ export class VentasComponent implements OnInit {
       );
   }
 
+  octenerVentasPausadas(){
+    let datos: any = localStorage.getItem("datosUser");
+    datos = JSON.parse(datos);
+
+    this.ventaService.octenerVentasPausadas(datos.idSucursal , this.token).subscribe(res => {
+        this.ventasPausadas = res;
+    })
+  }
+
   descuentos() {
     if (this.productosVenta.length == 0) {
       notify("Agrregar articulos para poder usar los descuentos.", "danger");
@@ -165,10 +194,18 @@ export class VentasComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
+      //console.log(result);
       if(result.data === true){
-        console.log("llego");
-        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+          this.ticketConsultorio(result);
+          setTimeout(() => {
+            this.ticketConsultorio(result);
+          }, 500);
+      }
+    });
+  }
+
+  ticketConsultorio(result:any){
+    var mywindow = window.open('', 'PRINT', 'height=400,width=600');
         var f = new Date();
         let ticket = `
         <div style="font-size:13px;">
@@ -177,8 +214,9 @@ export class VentasComponent implements OnInit {
         </div>
         <p>FARMACIAS GI</p>
         <p style="margin-top:-15px;">Iguala de la Independencia</p>
+        <p style="margin-top:-15px;">${this.datosUser.sucursal}</p>
         <p style="margin-top:-15px;">TIPO:   ${result.tipo}</p>
-        <p style="margin-top:-15px;">TURNO:  ${result.turno} </p>
+        <p style="margin-top:-15px;">TURNO:  <span style="font-size:18px;">${result.turno}</span> </p>
         <p style="margin-top:-15px;">Fecha:  ${f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear()} </p>
         <p style="margin-top:-15px;">==========================================</p>
         <div style="text-align: center;">
@@ -197,9 +235,6 @@ export class VentasComponent implements OnInit {
         mywindow.focus(); // necessary for IE >= 10*/
 
         mywindow.print();
-        //mywindow.close();
-      }
-    });
   }
 
   totalVenta() {
@@ -297,16 +332,6 @@ export class VentasComponent implements OnInit {
     document.getElementById("searchProducto").focus();
   }
 
-  octenerVentasPausadas(){
-
-    let datos: any = localStorage.getItem("datosUser");
-    datos = JSON.parse(datos);
-
-    this.ventaService.octenerVentasPausadas(datos.idSucursal , this.token).subscribe(res => {
-        this.ventasPausadas = res;
-    })
-  }
-
   pausarVenta() {
 
     if (this.productosVenta.length == 0) {
@@ -399,9 +424,6 @@ export class VentasComponent implements OnInit {
 
     this.spinner.show();
 
-    let datos: any = localStorage.getItem("datosUser");
-    datos = JSON.parse(datos);
-
     let productos = [];
 
     this.productosVenta.map( art => {
@@ -413,22 +435,24 @@ export class VentasComponent implements OnInit {
     })
 
     let venta: any = {
-      "idVenta": this.idVenta,
-      "idEmpleado":datos.idEmpleado,
+      "idVenta": (this.tipoVenta == "devolucion")? 0 : this.idVenta,
+      "idEmpleado":this.datosUser.idEmpleado,
       "idCliente": (Object.keys(this.cliente).length == 0)? 47 : this.cliente.idCliente,
-      "idSucursal": datos.idSucursal,
+      "idSucursal": this.datosUser.idSucursal,
       "productosVenta": productos
     };
 
     if(this.tipoVenta == "devolucion"){
-      this.ventaService.devolucion(this.token , this.idVenta ,datos.idSucursal ).subscribe(res => {
+      this.ventaService.devolucion(this.token , this.idVenta ,this.datosUser.idSucursal ).subscribe(res => {
         this.ventaService.guardarVenta(venta, this.token).subscribe(
           (res) => {
-            console.log(res);
+            //console.log(res);
             if(res.codigo == "0"){
-              this.octenerProductos();
+              this.spinner.hide();
+              this.octenerTodosLosProductos();
+              //this.octenerProductos();
               this.octenerVentasPausadas();
-              this.ticketVenta(res.idVenta,datos.nombre,cambio,importe);
+              this.ticketVenta(res.idVenta,this.datosUser.nombre,cambio,importe);
               notify(res.mensaje, "success");
             }else if(res.codigo == "500"){
               this.spinner.hide();
@@ -449,11 +473,13 @@ export class VentasComponent implements OnInit {
     }else{
       this.ventaService.guardarVenta(venta, this.token).subscribe(
         (res) => {
-          console.log(res);
+          //console.log(res);
           if(res.codigo == "0"){
-            this.octenerProductos();
+            //this.octenerProductos();
+            this.spinner.hide();
+            this.octenerTodosLosProductos();
             this.octenerVentasPausadas();
-            this.ticketVenta(res.idVenta,datos.nombre,cambio,importe);
+            this.ticketVenta(res.idVenta,this.datosUser.nombre,cambio,importe);
             notify(res.mensaje, "success");
           }else if(res.codigo == "500"){
             this.spinner.hide();
@@ -475,6 +501,7 @@ export class VentasComponent implements OnInit {
   }
 
   ticketVenta(folio,empleado,cambio,importe){
+
     var mywindow = window.open('', 'PRINT', 'height=400,width=600');
         var f = new Date();
         let ticket = `
@@ -484,6 +511,7 @@ export class VentasComponent implements OnInit {
         </div>
         <p>COMPROBANTE DE VENTA</p>
         <p style="margin-top:-15px;">FARMACIAS GI</p>
+        <p style="margin-top:-15px;">${this.datosUser.sucursal}</p>
         <p style="margin-top:-15px;">Iguala de la Independencia</p>
         <p style="margin-top:-15px;">Folio:   ${folio}</p>
         <p style="margin-top:-15px;">Le atendio:  ${empleado} </p>
@@ -535,9 +563,6 @@ export class VentasComponent implements OnInit {
 
         mywindow.print();
         this.limpiarVenta();
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 1000);
   }
 
   retornarVentaPausada(art:any){
@@ -648,7 +673,7 @@ export class VentasComponent implements OnInit {
   this.totalVenta();
 }
 
-modalVenta(){
+  modalVenta(){
   
   if (this.productosVenta.length == 0) {
     notify("No hay articulos agregados..", "danger");
@@ -684,6 +709,10 @@ modalVenta(){
       this.venta(result.cambio , result.importe);
     }
   });
+}
+
+actualizarProductos(){
+  this.octenerTodosLosProductos();
 }
 
 }

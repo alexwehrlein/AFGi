@@ -106,7 +106,7 @@ export class ModalDevolucionesComponent implements OnInit {
     }
 
     this.spinner.show();
-    console.log(this.venta);
+    //console.log(this.venta);
 
     this.venta.productosMedicamento.map((item, index) => {
       let medicamentoIndex = false;

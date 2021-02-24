@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy} from "@angular/core";
+import { Component, OnInit, OnDestroy, Output, EventEmitter} from "@angular/core";
 import { notify } from "../../notificaciones/notify";
 import { Router } from "@angular/router";
 import { SucursalService } from "../../services/sucursal.service";
 import { ModelPendientesComponent } from "../model-pendientes/model-pendientes.component";
 import { MatDialog } from "@angular/material/dialog";
 import { LoginService } from "app/services/login.service";
+import { ModalGastoComponent } from "../modal-gasto/modal-gasto.component";
 
 @Component({
     selector: "app-navbar-cajero",
@@ -12,7 +13,7 @@ import { LoginService } from "app/services/login.service";
     styleUrls: ["./navbar-cajero.component.css"],
 })
 export class NavbarCajeroComponent implements OnInit , OnDestroy{
-    
+    @Output() actualizarProductos = new EventEmitter(); 
     notificaciones;
     pendientes: any[] = [];
     token: string;
@@ -185,6 +186,7 @@ export class NavbarCajeroComponent implements OnInit , OnDestroy{
         dialogRef.afterClosed().subscribe((result) => {
             if (result == undefined) {
                 this.notificacionesHechas();
+                this.actualizarProductos.emit();
             }
         });
     }
@@ -193,5 +195,12 @@ export class NavbarCajeroComponent implements OnInit , OnDestroy{
         this.loginService.logout(this.token).subscribe(res => {
             this.router.navigate(["login"]);
         })
+    }
+
+    gastos(){
+        const dialogRef = this.dialog.open(ModalGastoComponent, {
+            width: "40%",
+            disableClose: true,
+          });
     }
 }

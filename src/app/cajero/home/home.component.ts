@@ -110,7 +110,7 @@ export class HomeComponent implements OnInit {
         <p style="margin-top:-11px;">VENTAS TOTALES: $ ${res.totalVentas}</p>
         <p style="margin-top:-11px;">GASTOS TOTALES: $ ${res.totalGastos}</p>
         <p style="margin-top:-11px;">*************************************</p>
-        <p style="margin-top:-11px;">ENTREGAN CAJEROS: $ ${res.totalVentas}</p>
+        <p style="margin-top:-11px;">ENTREGAN CAJEROS: $ ${res.gananciaCajaVenta}</p>
         <p style="margin-top:-11px;">_______________________________________</p>
         </div>
         `;

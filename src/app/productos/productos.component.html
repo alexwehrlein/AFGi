@@ -207,9 +207,7 @@
                                                 matInput
                                                 type="text"
                                                 placeholder="Buscar"
-                                                (keyup)="
-                                                    applyFilterMedicamento($event.target.value)
-                                                "
+                                                (keyup)="applyFilterMedicamento($event.target.value)"
                                             />
                                         </mat-form-field>
                                         <div class="col-md-12">
@@ -232,7 +230,7 @@
                                                         Descripción
                                                     </th>
                                                     <td mat-cell *matCellDef="let element">
-                                                        {{ element.descripcion }}
+                                                        {{ element.descripcion | slice: 0: 15}} ...
                                                     </td>
                                                 </ng-container>
 
@@ -606,10 +604,6 @@
                                             [dataSource]="dataSource"
                                             class="mat-elevation-z8"
                                         >
-                                            <!--- Note that these columns can be defined in any order.
-                                              The actual rendered columns are set as a property on the row definition" -->
-
-                                            <!-- Position Column -->
                                             <ng-container matColumnDef="codigo">
                                                 <th mat-header-cell *matHeaderCellDef>Codigo</th>
                                                 <td mat-cell *matCellDef="let element">
@@ -617,7 +611,6 @@
                                                 </td>
                                             </ng-container>
 
-                                            <!-- Name Column -->
                                             <ng-container matColumnDef="nombre">
                                                 <th mat-header-cell *matHeaderCellDef>Nombre</th>
                                                 <td mat-cell *matCellDef="let element">
@@ -629,17 +622,15 @@
                                                 </td>
                                             </ng-container>
 
-                                            <!-- Weight Column -->
                                             <ng-container matColumnDef="descripcion">
                                                 <th mat-header-cell *matHeaderCellDef>
                                                     Descripción
                                                 </th>
                                                 <td mat-cell *matCellDef="let element">
-                                                    {{ element.descripcion }}
+                                                    {{ element.descripcion | slice:0 : 15}} ...
                                                 </td>
                                             </ng-container>
 
-                                            <!-- Symbol Column -->
                                             <ng-container matColumnDef="agregar">
                                                 <th mat-header-cell *matHeaderCellDef>Opciones</th>
                                                 <td mat-cell *matCellDef="let element">
@@ -766,10 +757,7 @@
                                             [dataSource]="dataSourceG"
                                             class="mat-elevation-z8"
                                         >
-                                            <!--- Note that these columns can be defined in any order.
-                                          The actual rendered columns are set as a property on the row definition" -->
-
-                                            <!-- Position Column -->
+                                    
                                             <ng-container matColumnDef="codigo">
                                                 <th mat-header-cell *matHeaderCellDef>Codigo</th>
                                                 <td mat-cell *matCellDef="let element">
@@ -777,7 +765,6 @@
                                                 </td>
                                             </ng-container>
 
-                                            <!-- Name Column -->
                                             <ng-container matColumnDef="nombre">
                                                 <th mat-header-cell *matHeaderCellDef>Nombre</th>
                                                 <td mat-cell *matCellDef="let element">
@@ -789,17 +776,15 @@
                                                 </td>
                                             </ng-container>
 
-                                            <!-- Weight Column -->
                                             <ng-container matColumnDef="descripcion">
                                                 <th mat-header-cell *matHeaderCellDef>
                                                     Descripción
                                                 </th>
                                                 <td mat-cell *matCellDef="let element">
-                                                    {{ element.descripcion }}
+                                                    {{ element.descripcion | slice: 0 : 15}} ...
                                                 </td>
                                             </ng-container>
 
-                                            <!-- Symbol Column -->
                                             <ng-container matColumnDef="agregar">
                                                 <th mat-header-cell *matHeaderCellDef>Opciones</th>
                                                 <td mat-cell *matCellDef="let element">
@@ -847,10 +832,6 @@
                                             [dataSource]="dataSourceTraspaso"
                                             class="mat-elevation-z8"
                                         >
-                                            <!--- Note that these columns can be defined in any order.
-                                    The actual rendered columns are set as a property on the row definition" -->
-
-                                            <!-- Position Column -->
                                             <ng-container matColumnDef="codigo">
                                                 <th mat-header-cell *matHeaderCellDef>Codigo</th>
                                                 <td mat-cell *matCellDef="let element">
@@ -858,7 +839,6 @@
                                                 </td>
                                             </ng-container>
 
-                                            <!-- Name Column -->
                                             <ng-container matColumnDef="nombre">
                                                 <th mat-header-cell *matHeaderCellDef>Nombre</th>
                                                 <td mat-cell *matCellDef="let element">
@@ -866,7 +846,6 @@
                                                 </td>
                                             </ng-container>
 
-                                            <!-- Weight Column -->
                                             <ng-container matColumnDef="sucursales">
                                                 <th mat-header-cell *matHeaderCellDef>
                                                     sucursales
@@ -879,7 +858,6 @@
                                                 </td>
                                             </ng-container>
 
-                                            <!-- Symbol Column -->
                                             <ng-container matColumnDef="opciones">
                                                 <th mat-header-cell *matHeaderCellDef>Opciones</th>
                                                 <td

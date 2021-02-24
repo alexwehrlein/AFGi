@@ -92,5 +92,38 @@ export class ProductoService {
         );
     }
 
+    async getProductosBodega(token){
+        var headers = {
+            headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
+        };
+        let productos:Producto[] = [];
+        let bodega:any = {};
+        let medicamento = await this.http.get<Producto[]>(environment.URL + "producto/medicamento", headers).toPromise();
+        let abarrote = await this.http.get<Producto[]>(environment.URL + "producto/abarrote", headers).toPromise();
+        let cosmetico = await this.http.get<Producto[]>(environment.URL + "producto/cosmetico", headers).toPromise();
+        productos.push(...medicamento);
+        productos.push(...abarrote);
+        productos.push(...cosmetico);
+        bodega.medicamento = medicamento;
+        bodega.abarrote = abarrote;
+        bodega.cosmetico = cosmetico;
+        bodega.productos = productos;
+        return bodega;
+    }
+
+    async getAsyncProductosSucursales(token, idSucursal) {
+        var headers = {
+            headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
+        };
+        let productos:Producto[] = [];
+        let medicamento = await this.http.get<Producto[]>(environment.URL + "producto/porSucursal/medicamento/"+idSucursal, headers).toPromise();
+        let abarrote = await this.http.get<Producto[]>(environment.URL + "producto/porSucursal/abarrote/"+idSucursal, headers).toPromise();
+        let cosmetico = await this.http.get<Producto[]>(environment.URL + "producto/porSucursal/cosmetico/"+idSucursal, headers).toPromise();
+        productos.push(...medicamento);
+        productos.push(...abarrote);
+        productos.push(...cosmetico);
+        return productos;
+      }
+
 
 }

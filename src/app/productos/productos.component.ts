@@ -129,13 +129,46 @@ export class ProductosComponent implements OnInit {
             sustancia: [""],
             tipoMedicamento: [""],
         });
-
+        this.octenerproductosBodega();
         this.octenerListaTraspaso();
         this.octenerListaCompra();
-        this.octenerProductos();
+        //this.octenerProductos();
         this.octenerProveederos();
         this.dataSourceCompra = new MatTableDataSource(this.productosCompra);
         this.dataSourceTraspaso = new MatTableDataSource(this.productosTraspaso);
+    }
+
+    octenerproductosBodega(){
+        this.spinner.show();
+        this.productoInyectable.getProductosBodega(this.token).then( res => {
+            this.spinner.hide();
+            console.log(res);
+            this.ELEMENT_DATA.length = 0;
+
+            this.ELEMENT_DATA_MEDICAMENTO = res.medicamento;
+            this.dataSourceMedicamento = new MatTableDataSource(this.ELEMENT_DATA_MEDICAMENTO);
+            this.dataSourceMedicamento.paginator = this.paginatorMedicamento;
+
+            this.ELEMENT_DATA_ABARROTES = res.abarrote;
+            this.dataSourceAbarrotes = new MatTableDataSource(this.ELEMENT_DATA_ABARROTES);
+            this.dataSourceAbarrotes.paginator = this.paginatorAbarrotes;
+
+            this.ELEMENT_DATA_COSMETICOS = res.cosmetico;
+            this.dataSourcePerfumeria = new MatTableDataSource(this.ELEMENT_DATA_COSMETICOS);
+            this.dataSourcePerfumeria.paginator = this.paginatorPerfumeria;
+
+            this.ELEMENT_DATA = res.productos;
+            this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+            this.dataSourceG = new MatTableDataSource(this.ELEMENT_DATA);
+
+            this.dataSource.paginator = this.paginator;
+            this.dataSourceG.paginator = this.paginatorG;
+           
+
+        }).catch(err => {
+            this.spinner.hide();
+            console.log(err);
+        })
     }
 
     octenerProductos() {
@@ -281,7 +314,8 @@ export class ProductosComponent implements OnInit {
             (res) => {
                 this.formularioProductos.reset();
                 notify("El producto fue registro exitosamente", "success");
-                this.octenerProductos();
+                //this.octenerProductos();
+                this.octenerproductosBodega();
             },
             (res) => {
                 if (res.codigo == 3) {
@@ -374,7 +408,8 @@ export class ProductosComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result == undefined) {
-                this.octenerProductos();
+                //this.octenerProductos();
+                this.octenerproductosBodega();
             }
         });
     }
@@ -497,7 +532,8 @@ export class ProductosComponent implements OnInit {
                 localStorage.removeItem("listaCompra");
                 this.idProveedor = null;
                 this.octenerListaCompra();
-                this.octenerProductos();
+                //this.octenerProductos();
+                this.octenerproductosBodega();
                 this.dataSourceCompra.data = this.productosCompra;
                 this.spinner.hide();
             },
@@ -542,7 +578,8 @@ export class ProductosComponent implements OnInit {
                 notify("El traspaso fue correcto. AVISAR A LAS FARMACIAS", "success");
                 localStorage.setItem("listaTraspaso", "[]");
                 localStorage.setItem("listaTraspasoServis", "[]");
-                this.octenerProductos();
+                //this.octenerProductos();
+                this.octenerproductosBodega();
                 this.octenerListaTraspaso();
                 this.dataSourceTraspaso.data = this.productosTraspaso;
                 this.spinner.hide();
